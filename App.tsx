@@ -10,6 +10,12 @@ export default function App() {
         style={styles.imageBackground}
       />
 
+      {/* Una imagen para la pantalla: */}
+      <View style={styles.logoContainer}>
+        <Image source={require("./assets/logo.png")} style={styles.logoImage} />
+        <Text style={styles.logoText}>Food App</Text>
+      </View>
+
       {/* El formulario: */}
       <View style={styles.form}></View>
     </View>
@@ -42,5 +48,23 @@ const styles = StyleSheet.create({
     bottom: 0,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
+  },
+  // Estilo para el logo de la pantalla inicial:
+  logoContainer: {
+    position: "absolute",
+    alignSelf: "center",
+    top: "15%",
+  },
+  // El estilo para la imagen del logo:
+  logoImage: {
+    width: 100,
+    height: 100,
+  },
+  logoText: {
+    color: "white",
+    textAlign: "center",
+    fontSize: 20,
+    marginTop: 10,
+    fontWeight: "bold",
   },
 });
