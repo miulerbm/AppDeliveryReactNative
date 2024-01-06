@@ -1,5 +1,13 @@
 import { StatusBar } from "expo-status-bar";
-import { Image, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  Image,
+  StyleSheet,
+  Text,
+  TextInput,
+  ToastAndroid,
+  View,
+} from "react-native";
 
 export default function App() {
   return (
@@ -17,7 +25,52 @@ export default function App() {
       </View>
 
       {/* El formulario: */}
-      <View style={styles.form}></View>
+      <View style={styles.form}>
+        {/* Los elementos del formulario: */}
+        {/* Primero el texto 'INGRESAR': */}
+        <Text style={styles.formText}>INGRESAR</Text>
+
+        {/* Correo electrónico: */}
+        <View style={styles.formInput}>
+          <Image
+            style={styles.formIcon}
+            source={require("./assets/email.png")}
+          />
+          <TextInput
+            style={styles.formTextInput}
+            placeholder="Correo electrónico"
+            keyboardType="email-address"
+          />
+        </View>
+        {/* CONTRASEÑA: */}
+        <View style={styles.formInput}>
+          <Image
+            style={styles.formIcon}
+            source={require("./assets/password.png")}
+          />
+          <TextInput
+            style={styles.formTextInput}
+            placeholder="Contraseña"
+            keyboardType="default"
+            secureTextEntry={true}
+          />
+        </View>
+
+        {/* BOTÓN DE 'ENTRAR'*/}
+        <View style={{ marginTop: 30 }}>
+          <Button
+            title="ENTRAR"
+            onPress={() => ToastAndroid.show("Clicked!", ToastAndroid.LONG)}
+            color="orange"
+          />
+        </View>
+
+        {/* Footer de 'No tienes cuenta // Regístrate' */}
+        <View style={styles.formRegister}>
+          <Text>No tienes Cuenta?</Text>
+          <Text style={styles.formRegisterText}>Regístrate</Text>
+        </View>
+      </View>
     </View>
   );
 }
@@ -40,6 +93,8 @@ const styles = StyleSheet.create({
     // Opacidad de la imagen
     opacity: 0.7,
   },
+
+  // Estilos para el formulario:
   form: {
     width: "100%",
     height: "40%",
@@ -48,7 +103,40 @@ const styles = StyleSheet.create({
     bottom: 0,
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
+    padding: 30, // pd para margen interno, mg para margen externo
   },
+  formIcon: {
+    width: 25,
+    height: 25,
+    marginTop: 5,
+  },
+  formText: {
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  formInput: {
+    flexDirection: "row",
+    marginTop: 30,
+  },
+  formTextInput: {
+    flex: 1, //Con esto la línea del text Input ocupa todo el ancho disponible
+    borderBottomWidth: 1,
+    borderBottomColor: "#AAAAAA",
+    marginLeft: 15,
+  },
+  formRegister: {
+    flexDirection: "row",
+    justifyContent: "center",
+  },
+  formRegisterText: {
+    fontStyle: "italic",
+    color: "orange",
+    borderBottomWidth: 1,
+    borderBottomColor: "orange",
+    fontWeight: "bold",
+    marginLeft: 10,
+  },
+
   // Estilo para el logo de la pantalla inicial:
   logoContainer: {
     position: "absolute",
