@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -8,12 +8,16 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { RoundedButton } from "../../components/RoundedButton";
+import { RoundedButton } from "../../../Presentation/components/RoundedButton";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../App";
+import { RootStackParamList } from "../../../../App";
 
 export const HomeScreen = () => {
+  // Implementamos los useStates para manejar los estados, luego se hará con el patrón ViewModel
+  const [email, setEmail] = useState(""); // Se inicializa al estado "email" con un string vacío y se define a su función para modificarlo
+  const [password, setPassword] = useState("");
+
   // Se configuran los tipso de dato que manejarán las pantallas con la siguiente línea:
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
@@ -21,14 +25,14 @@ export const HomeScreen = () => {
     <View style={styles.container}>
       {/* EL fondo: */}
       <Image
-        source={require("../../../assets/chef.jpg")}
+        source={require("../../../../assets/chef.jpg")}
         style={styles.imageBackground}
       />
 
       {/* Una imagen para la pantalla: */}
       <View style={styles.logoContainer}>
         <Image
-          source={require("../../../assets/logo.png")}
+          source={require("../../../../assets/logo.png")}
           style={styles.logoImage}
         />
         <Text style={styles.logoText}>Food App</Text>
@@ -44,25 +48,29 @@ export const HomeScreen = () => {
         <View style={styles.formInput}>
           <Image
             style={styles.formIcon}
-            source={require("../../../assets/email.png")}
+            source={require("../../../../assets/email.png")}
           />
           <TextInput
             style={styles.formTextInput}
             placeholder="Correo electrónico"
             keyboardType="email-address"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
           />
         </View>
         {/* CONTRASEÑA: */}
         <View style={styles.formInput}>
           <Image
             style={styles.formIcon}
-            source={require("../../../assets/password.png")}
+            source={require("../../../../assets/password.png")}
           />
           <TextInput
             style={styles.formTextInput}
             placeholder="Contraseña"
             keyboardType="default"
             secureTextEntry={true}
+            value={password}
+            onChangeText={(text) => setPassword(text)}
           />
         </View>
 
@@ -78,7 +86,10 @@ export const HomeScreen = () => {
         <View style={{ marginTop: 30 }}>
           <RoundedButton
             text="ENTRAR"
-            onPress={() => ToastAndroid.show("Hola", ToastAndroid.SHORT)}
+            onPress={() => {
+              console.log("email: ", email);
+              console.log("password: ", password);
+            }}
           />
         </View>
 
