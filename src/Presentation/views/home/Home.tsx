@@ -13,6 +13,7 @@ import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../../App";
 import useViewModel from "./ViewModel";
+import { CustomTextInput } from "../../components/CustomTextInput";
 
 export const HomeScreen = () => {
   // Usando el ViewModel, desestructuramos los valores:
@@ -43,35 +44,25 @@ export const HomeScreen = () => {
         {/* Primero el texto 'INGRESAR': */}
         <Text style={styles.formText}>INGRESAR</Text>
 
-        {/* Correo electrónico: */}
-        <View style={styles.formInput}>
-          <Image
-            style={styles.formIcon}
-            source={require("../../../../assets/email.png")}
-          />
-          <TextInput
-            style={styles.formTextInput}
-            placeholder="Correo electrónico"
-            keyboardType="email-address"
-            value={email}
-            onChangeText={(text) => onChange("email", text)}
-          />
-        </View>
+        <CustomTextInput
+          image={require("../../../../assets/email.png")}
+          placeholder="Correo electrónico"
+          keyboardType="email-address"
+          property="email"
+          onChangeText={onChange}
+          value={email}
+        />
+
         {/* CONTRASEÑA: */}
-        <View style={styles.formInput}>
-          <Image
-            style={styles.formIcon}
-            source={require("../../../../assets/password.png")}
-          />
-          <TextInput
-            style={styles.formTextInput}
-            placeholder="Contraseña"
-            keyboardType="default"
-            secureTextEntry={true}
-            value={password}
-            onChangeText={(text) => onChange("password", text)}
-          />
-        </View>
+        <CustomTextInput
+          image={require("../../../../assets/password.png")}
+          placeholder="Contraseña"
+          keyboardType="default"
+          property="password"
+          onChangeText={onChange}
+          value={password}
+          secureTextEntry={true}
+        />
 
         {/* BOTÓN DE 'ENTRAR'*/}
         {/* <View style={{ marginTop: 30 }}>
