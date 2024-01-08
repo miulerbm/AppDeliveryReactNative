@@ -12,13 +12,12 @@ import { RoundedButton } from "../../../Presentation/components/RoundedButton";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../../App";
+import useViewModel from "./ViewModel";
 
 export const HomeScreen = () => {
-  // Implementamos los useStates para manejar los estados, luego se hará con el patrón ViewModel
-  const [email, setEmail] = useState(""); // Se inicializa al estado "email" con un string vacío y se define a su función para modificarlo
-  const [password, setPassword] = useState("");
+  // Usando el ViewModel, desestructuramos los valores:
+  const { email, password, onChange } = useViewModel();
 
-  // Se configuran los tipso de dato que manejarán las pantallas con la siguiente línea:
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
 
   return (
@@ -55,7 +54,7 @@ export const HomeScreen = () => {
             placeholder="Correo electrónico"
             keyboardType="email-address"
             value={email}
-            onChangeText={(text) => setEmail(text)}
+            onChangeText={(text) => onChange("email", text)}
           />
         </View>
         {/* CONTRASEÑA: */}
@@ -70,7 +69,7 @@ export const HomeScreen = () => {
             keyboardType="default"
             secureTextEntry={true}
             value={password}
-            onChangeText={(text) => setPassword(text)}
+            onChangeText={(text) => onChange("password", text)}
           />
         </View>
 
