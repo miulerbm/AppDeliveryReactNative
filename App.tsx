@@ -8,6 +8,7 @@ import {
   ToastAndroid,
   View,
 } from "react-native";
+import { RoundedButton } from "./src/components/RoundedButton";
 
 export default function App() {
   return (
@@ -57,12 +58,16 @@ export default function App() {
         </View>
 
         {/* BOTÓN DE 'ENTRAR'*/}
-        <View style={{ marginTop: 30 }}>
+        {/* <View style={{ marginTop: 30 }}>
           <Button
             title="ENTRAR"
             onPress={() => ToastAndroid.show("Clicked!", ToastAndroid.LONG)}
             color="orange"
           />
+        </View> */}
+
+        <View style={{ marginTop: 30 }}>
+          <RoundedButton text="ENTRAR" />
         </View>
 
         {/* Footer de 'No tienes cuenta // Regístrate' */}
@@ -127,6 +132,7 @@ const styles = StyleSheet.create({
   formRegister: {
     flexDirection: "row",
     justifyContent: "center",
+    marginTop: 30, //Para que se vea más separado del 'ENTRAR'
   },
   formRegisterText: {
     fontStyle: "italic",
