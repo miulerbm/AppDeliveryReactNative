@@ -67,7 +67,10 @@ export default function App() {
         </View> */}
 
         <View style={{ marginTop: 30 }}>
-          <RoundedButton text="ENTRAR" />
+          <RoundedButton
+            text="ENTRAR"
+            onPress={() => ToastAndroid.show("Hola", ToastAndroid.SHORT)}
+          />
         </View>
 
         {/* Footer de 'No tienes cuenta // Regístrate' */}
