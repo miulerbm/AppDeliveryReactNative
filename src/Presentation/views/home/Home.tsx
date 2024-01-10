@@ -10,24 +10,35 @@ import {
 } from "react-native";
 import { RoundedButton } from "../../../Presentation/components/RoundedButton";
 import { useNavigation } from "@react-navigation/native";
-import { StackNavigationProp } from "@react-navigation/stack";
+import { StackNavigationProp, StackScreenProps } from "@react-navigation/stack";
 import { RootStackParamList } from "../../../../App";
 import useViewModel from "./ViewModel";
 import { CustomTextInput } from "../../components/CustomTextInput";
 import styles from "./Styles";
 
-export const HomeScreen = () => {
-  // Usando el ViewModel, desestructuramos los valores:
-  const { email, password, errorMessage, onChange, login } = useViewModel();
-  // Recuerda que errorMessage trabaja con una función asíncrona, usar useEffect para escuchar los cambios.
+// Vamos a cambiar que, el navigation se pase como un prop:
 
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+interface Props extends StackScreenProps<RootStackParamList, "HomeScreen"> {}
+
+export const HomeScreen = ({ navigation, route }: Props) => {
+  // Usando el ViewModel, desestructuramos los valores:
+  const { email, password, errorMessage, onChange, login, user } =
+    useViewModel();
+  // Recuerda que errorMessage trabaja con una función asíncrona, usar useEffect para escuchar los cambios.
 
   useEffect(() => {
     if (errorMessage !== "") {
       ToastAndroid.show(errorMessage, ToastAndroid.LONG);
     }
   }, [errorMessage]);
+
+  useEffect(() => {
+    // Cuando cambie el estado del user:
+    if (user?.id !== null && user?.id !== undefined) {
+      // Utilizamos el navigation para pasar a la pantalla profile:
+      navigation.navigate("ProfileInfoScreen");
+    }
+  }, [user]);
 
   return (
     <View style={styles.container}>
