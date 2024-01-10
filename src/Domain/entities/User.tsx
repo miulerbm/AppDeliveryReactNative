@@ -9,4 +9,5 @@ export interface User {
   email: string;
   password: string;
   confirmpassword: string;
+  session_token?: string;
 }

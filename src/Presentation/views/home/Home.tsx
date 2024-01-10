@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Image,
   StyleSheet,
@@ -18,9 +18,16 @@ import styles from "./Styles";
 
 export const HomeScreen = () => {
   // Usando el ViewModel, desestructuramos los valores:
-  const { email, password, onChange } = useViewModel();
+  const { email, password, errorMessage, onChange, login } = useViewModel();
+  // Recuerda que errorMessage trabaja con una función asíncrona, usar useEffect para escuchar los cambios.
 
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+
+  useEffect(() => {
+    if (errorMessage !== "") {
+      ToastAndroid.show(errorMessage, ToastAndroid.LONG);
+    }
+  }, [errorMessage]);
 
   return (
     <View style={styles.container}>
@@ -75,13 +82,7 @@ export const HomeScreen = () => {
             </View> */}
 
         <View style={{ marginTop: 30 }}>
-          <RoundedButton
-            text="ENTRAR"
-            onPress={() => {
-              console.log("email: ", email);
-              console.log("password: ", password);
-            }}
-          />
+          <RoundedButton text="LOGIN" onPress={() => login()} />
         </View>
 
         {/* Footer de 'No tienes cuenta // Regístrate' */}
