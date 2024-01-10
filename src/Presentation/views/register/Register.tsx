@@ -1,6 +1,7 @@
 import React from "react";
 import {
   Image,
+  ScrollView,
   StyleSheet,
   Text,
   TextInput,
@@ -43,67 +44,69 @@ export const RegisterScreen = () => {
       </View>
 
       <View style={styles.form}>
-        <Text style={styles.formText}>REGISTRARSE</Text>
+        <ScrollView>
+          <Text style={styles.formText}>REGISTRARSE</Text>
 
-        <CustomTextInput
-          placeholder="Nombres"
-          image={require("../../../../assets/user.png")}
-          keyboardType="default"
-          property="name"
-          onChangeText={onChange}
-          value={name}
-        ></CustomTextInput>
+          <CustomTextInput
+            placeholder="Nombres"
+            image={require("../../../../assets/user.png")}
+            keyboardType="default"
+            property="name"
+            onChangeText={onChange}
+            value={name}
+          ></CustomTextInput>
 
-        <CustomTextInput
-          placeholder="Apellidos"
-          image={require("../../../../assets/my_user.png")}
-          keyboardType="default"
-          property="lastname"
-          onChangeText={onChange}
-          value={lastname}
-        ></CustomTextInput>
+          <CustomTextInput
+            placeholder="Apellidos"
+            image={require("../../../../assets/my_user.png")}
+            keyboardType="default"
+            property="lastname"
+            onChangeText={onChange}
+            value={lastname}
+          ></CustomTextInput>
 
-        <CustomTextInput
-          placeholder="Correo electrónico"
-          image={require("../../../../assets/email.png")}
-          keyboardType="email-address"
-          property="email"
-          onChangeText={onChange}
-          value={email}
-        ></CustomTextInput>
+          <CustomTextInput
+            placeholder="Correo electrónico"
+            image={require("../../../../assets/email.png")}
+            keyboardType="email-address"
+            property="email"
+            onChangeText={onChange}
+            value={email}
+          ></CustomTextInput>
 
-        <CustomTextInput
-          placeholder="Teléfono"
-          image={require("../../../../assets/phone.png")}
-          keyboardType="numeric"
-          property="phone"
-          onChangeText={onChange}
-          value={phone}
-        ></CustomTextInput>
+          <CustomTextInput
+            placeholder="Teléfono"
+            image={require("../../../../assets/phone.png")}
+            keyboardType="numeric"
+            property="phone"
+            onChangeText={onChange}
+            value={phone}
+          ></CustomTextInput>
 
-        <CustomTextInput
-          placeholder="Contraseña"
-          image={require("../../../../assets/password.png")}
-          keyboardType="default"
-          property="password"
-          onChangeText={onChange}
-          value={password}
-          secureTextEntry={true}
-        ></CustomTextInput>
+          <CustomTextInput
+            placeholder="Contraseña"
+            image={require("../../../../assets/password.png")}
+            keyboardType="default"
+            property="password"
+            onChangeText={onChange}
+            value={password}
+            secureTextEntry={true}
+          ></CustomTextInput>
 
-        <CustomTextInput
-          placeholder="Confirmar contraseña"
-          image={require("../../../../assets/confirm_password.png")}
-          keyboardType="default"
-          property="confirmpassword"
-          onChangeText={onChange}
-          value={confirmpassword}
-          secureTextEntry={true}
-        ></CustomTextInput>
+          <CustomTextInput
+            placeholder="Confirmar contraseña"
+            image={require("../../../../assets/confirm_password.png")}
+            keyboardType="default"
+            property="confirmpassword"
+            onChangeText={onChange}
+            value={confirmpassword}
+            secureTextEntry={true}
+          ></CustomTextInput>
 
-        <View style={{ marginTop: 30 }}>
-          <RoundedButton text="CONFIRMAR" onPress={() => register()} />
-        </View>
+          <View style={{ marginTop: 30 }}>
+            <RoundedButton text="CONFIRMAR" onPress={() => register()} />
+          </View>
+        </ScrollView>
       </View>
     </View>
   );
