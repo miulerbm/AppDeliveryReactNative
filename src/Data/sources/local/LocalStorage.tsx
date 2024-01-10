@@ -21,8 +21,18 @@ export const LocalStorage = () => {
     }
   };
 
+  // Método para eliminar información
+  const remove = async (key: string) => {
+    try {
+      await AsyncStorage.removeItem(key);
+    } catch (error) {
+      console.log("Error en local Storage: " + error);
+    }
+  };
+
   return {
     save,
     getItem,
+    remove,
   };
 };

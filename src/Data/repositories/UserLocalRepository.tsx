@@ -14,4 +14,10 @@ export class UserLocalRepositoryImpl implements UserLocalRepository {
     const user: User = JSON.parse(data as any);
     return user;
   }
+
+  // Método para cerrar sesión o remover token:
+  async remove(): Promise<void> {
+    const { remove } = LocalStorage();
+    await remove("user");
+  }
 }

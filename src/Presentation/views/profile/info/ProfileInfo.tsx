@@ -1,10 +1,25 @@
 import React from "react";
-import { Text, View } from "react-native";
+import { Button, Text, View } from "react-native";
+import useViewModel from "./ViewModel";
+import { StackScreenProps } from "@react-navigation/stack";
+import { RootStackParamList } from "../../../../../App";
 
-export const ProfileInfoScreen = () => {
+interface Props
+  extends StackScreenProps<RootStackParamList, "ProfileInfoScreen"> {}
+export const ProfileInfoScreen = ({ navigation, route }: Props) => {
+  const { removeSession } = useViewModel();
+
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>PROFILE INFO SCREEN</Text>
+      <Button
+        onPress={() => {
+          // No solo se debe eliminar la sesión, sino también devolver al usuario a la pantalla principal
+          removeSession();
+          // Usamos el objeto navigation del StackScreenProps
+          navigation.navigate("HomeScreen");
+        }}
+        title="Cerrar sesión"
+      ></Button>
     </View>
   );
 };

@@ -36,7 +36,7 @@ export const HomeScreen = ({ navigation, route }: Props) => {
     // Cuando cambie el estado del user:
     if (user?.id !== null && user?.id !== undefined) {
       // Utilizamos el navigation para pasar a la pantalla profile:
-      navigation.navigate("ProfileInfoScreen");
+      navigation.replace("ProfileInfoScreen");
     }
   }, [user]);
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { LoginAuthUseCase } from "../../../Domain/useCases/auth/LoginAuth";
-import { SaveUserUseCase } from "../../../Domain/useCases/userLocal/SaveUser";
-import { GetUserUseCase } from "../../../Domain/useCases/userLocal/GetUser";
+import { SaveUserLocalUseCase } from "../../../Domain/useCases/userLocal/SaveUserLocal";
+import { GetUserLocalUseCase } from "../../../Domain/useCases/userLocal/GetUserLocal";
 import { useUserLocal } from "../../hooks/useUserLocal";
 
 const HomeViewModel = () => {
@@ -13,7 +13,7 @@ const HomeViewModel = () => {
     password: "",
   });
 
-  const { user } = useUserLocal();
+  const { user, getUserSession } = useUserLocal();
   console.log("USUARIO DE SESION: ", JSON.stringify(user));
 
   // Con este método lo que haremos es, al atributo dentro del objeto values, le pasaremos un valor:
@@ -31,7 +31,9 @@ const HomeViewModel = () => {
         setErrorMessage(response.message);
       } else {
         // Si la respuesta fue correcta, almacenamos el usuario en sesión.
-        await SaveUserUseCase(response.data);
+        await SaveUserLocalUseCase(response.data);
+        // Una vez que se almacene, volvemos a llamar al método para disparar el useEffect para navegar
+        getUserSession();
       }
     }
   };
