@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Image,
   ScrollView,
@@ -24,9 +24,19 @@ export const RegisterScreen = () => {
     phone,
     password,
     confirmpassword,
+    errorMessage,
     onChange,
     register,
   } = useViewModel();
+
+  // useEffect para saber en qué momento el errorMessage ya tiene asignado su valor
+  // Quiero escuchar en qué momento ya tiene establecido su valor
+  useEffect(() => {
+    if (errorMessage != "") {
+      // Si el errorMessage tiene algún contenido, que se muestre, sino, para qué :v
+      ToastAndroid.show(errorMessage, ToastAndroid.LONG);
+    }
+  }, [errorMessage]);
 
   return (
     <View style={styles.container}>
