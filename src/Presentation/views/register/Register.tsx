@@ -21,12 +21,14 @@ export const RegisterScreen = () => {
     name,
     lastname,
     email,
+    image,
     phone,
     password,
     confirmpassword,
     errorMessage,
     onChange,
     register,
+    pickImage,
   } = useViewModel();
 
   // useEffect para saber en qué momento el errorMessage ya tiene asignado su valor
@@ -46,10 +48,18 @@ export const RegisterScreen = () => {
       />
 
       <View style={styles.logoContainer}>
-        <Image
-          source={require("../../../../assets/user_image.png")}
-          style={styles.logoImage}
-        />
+        {/* Cuando pulsemos la imagen, debe proceder el imagePicker */}
+        <TouchableOpacity onPress={() => pickImage()}>
+          {image == "" ? (
+            <Image
+              source={require("../../../../assets/user_image.png")}
+              style={styles.logoImage}
+            />
+          ) : (
+            <Image source={{ uri: image }} style={styles.logoImage} />
+          )}
+        </TouchableOpacity>
+
         <Text style={styles.logoText}>SELECCIONA UNA IMAGEN</Text>
       </View>
 
