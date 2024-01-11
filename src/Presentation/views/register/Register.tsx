@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Image,
   ScrollView,
@@ -13,6 +13,7 @@ import { RoundedButton } from "../../components/RoundedButton";
 import useViewModel from "./ViewModel";
 import { CustomTextInput } from "../../components/CustomTextInput";
 import styles from "./Styles";
+import { ModalPickImage } from "../../components/ModalPickImage";
 
 export const RegisterScreen = () => {
   // Accedemos a los campos
@@ -29,7 +30,11 @@ export const RegisterScreen = () => {
     onChange,
     register,
     pickImage,
+    takePhoto,
   } = useViewModel();
+
+  // Manejo de estados del Modal:
+  const [modalVisible, setModalVisible] = useState(false);
 
   // useEffect para saber en qué momento el errorMessage ya tiene asignado su valor
   // Quiero escuchar en qué momento ya tiene establecido su valor
@@ -48,8 +53,8 @@ export const RegisterScreen = () => {
       />
 
       <View style={styles.logoContainer}>
-        {/* Cuando pulsemos la imagen, debe proceder el imagePicker */}
-        <TouchableOpacity onPress={() => pickImage()}>
+        {/* Cuando pulsemos la imagen, ahora debe mostrar el modal, para elegir la opción de cámara o galería */}
+        <TouchableOpacity onPress={() => setModalVisible(true)}>
           {image == "" ? (
             <Image
               source={require("../../../../assets/user_image.png")}
@@ -128,6 +133,13 @@ export const RegisterScreen = () => {
           </View>
         </ScrollView>
       </View>
+
+      <ModalPickImage
+        openGallery={pickImage}
+        openCamera={takePhoto}
+        modalUseState={modalVisible}
+        setModalUseState={setModalVisible}
+      />
     </View>
   );
 };
