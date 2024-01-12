@@ -41,7 +41,7 @@ export const HomeScreen = ({ navigation, route }: Props) => {
       } else {
         // Si no tiene más de un rol, lo mandamos directo a ProfileInfoScreen:
         // Utilizamos el navigation para pasar a la pantalla profile:
-        navigation.replace("ProfileInfoScreen");
+        navigation.replace("ClientTabsNavigator");
       }
     }
   }, [user]);
