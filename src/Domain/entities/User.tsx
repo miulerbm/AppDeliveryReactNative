@@ -10,4 +10,5 @@ export interface User {
   password: string;
   confirmpassword: string;
   session_token?: string;
+  roles?: Rol[];
 }

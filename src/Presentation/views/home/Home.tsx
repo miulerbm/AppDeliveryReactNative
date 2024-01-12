@@ -35,8 +35,14 @@ export const HomeScreen = ({ navigation, route }: Props) => {
   useEffect(() => {
     // Cuando cambie el estado del user:
     if (user?.id !== null && user?.id !== undefined) {
-      // Utilizamos el navigation para pasar a la pantalla profile:
-      navigation.replace("ProfileInfoScreen");
+      // Validamos si el usuario tiene más de un rol:
+      if (user.roles?.length! > 1) {
+        navigation.replace("RolesScreen");
+      } else {
+        // Si no tiene más de un rol, lo mandamos directo a ProfileInfoScreen:
+        // Utilizamos el navigation para pasar a la pantalla profile:
+        navigation.replace("ProfileInfoScreen");
+      }
     }
   }, [user]);
 

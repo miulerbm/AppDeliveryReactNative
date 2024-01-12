@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { HomeScreen } from "./src/Presentation/views/home/Home";
 import { RegisterScreen } from "./src/Presentation/views/register/Register";
 import { ProfileInfoScreen } from "./src/Presentation/views/profile/info/ProfileInfo";
+import { RolesScreen } from "./src/Presentation/views/roles/Roles";
 
 // Necesitamos definir una configuración para manejar las pantallas:
 // Como, el tipo de dato que se le va a pasar y que van a mostrar las pantallas
@@ -13,6 +14,7 @@ export type RootStackParamList = {
   HomeScreen: undefined;
   RegisterScreen: undefined;
   ProfileInfoScreen: undefined; // tampoco recibe parámetros.
+  RolesScreen: undefined;
 };
 
 // Declaramos que la función va retornar un objeto del tipo RootStackParamList
@@ -36,6 +38,15 @@ const App = () => {
           options={{
             headerShown: true,
             title: "Nuevo Usuario",
+          }}
+        />
+
+        <Stack.Screen
+          name="RolesScreen"
+          component={RolesScreen}
+          options={{
+            headerShown: true,
+            title: "Selecciona un rol",
           }}
         />
 
