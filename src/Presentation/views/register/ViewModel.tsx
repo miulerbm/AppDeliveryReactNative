@@ -3,6 +3,10 @@ import { ApiDelivery } from "../../../Data/sources/remote/api/ApiDelivery";
 import { RegisterAuthUseCase } from "../../../Domain/useCases/auth/RegisterAuth";
 import { RegisterWithImageAuthUseCase } from "../../../Domain/useCases/auth/RegisterWithImageAuth";
 import * as ImagePicker from "expo-image-picker";
+// Importamos el caso de uso que permite almacenar la sesión del usuario:
+import { SaveUserLocalUseCase } from "../../../Domain/useCases/userLocal/SaveUserLocal";
+// También el hook para traer la sesión del usuario
+import { useUserLocal } from "../../hooks/useUserLocal";
 
 const RegisterViewModel = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -17,8 +21,13 @@ const RegisterViewModel = () => {
     confirmpassword: "",
   });
 
+  // State Loading para manejar si se está cargando o no una imagen:
+  const [loading, setLoading] = useState(false);
+
   // useState para manejar la imagen:
   const [file, setFile] = useState<ImagePicker.ImagePickerAsset>();
+  // Creamos una const para traer el user:
+  const { user, getUserSession } = useUserLocal();
 
   // Método para seleccionar la imagen:
   const pickImage = async () => {
@@ -54,10 +63,23 @@ const RegisterViewModel = () => {
 
   const register = async () => {
     if (isValidForm()) {
+      // Establecemos al Loading en True al iniciar el registro:
+      setLoading(true);
       // Si todo es validado:
       // const response = await RegisterAuthUseCase(values);
       const response = await RegisterWithImageAuthUseCase(values, file!); // file puede venir como nulo!
+      // Una vez terminado el registro y se ha obtenido una respuesta, ponemos al Loading en false:
+      setLoading(false);
+
       console.log("RESULT", JSON.stringify(response));
+
+      if (response.success) {
+        await SaveUserLocalUseCase(response.data);
+        // Traemos el hook para recargar el estado del usuario, y que nos lleve a la siguiente pantalla:
+        getUserSession();
+      } else {
+        setErrorMessage(response.message);
+      }
     }
   };
 
@@ -113,6 +135,8 @@ const RegisterViewModel = () => {
     pickImage,
     takePhoto,
     errorMessage,
+    loading,
+    user,
   };
 };
 
