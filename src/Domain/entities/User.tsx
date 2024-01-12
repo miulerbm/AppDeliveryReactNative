@@ -1,6 +1,8 @@
 // Vamos a crear la clase usuario.
 // Herramienta: app quicktype io
 
+import { Rol } from "./Rol";
+
 export interface User {
   id?: string;
   name: string;
