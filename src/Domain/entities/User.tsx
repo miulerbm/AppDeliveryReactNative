@@ -11,6 +11,7 @@ export interface User {
   email: string;
   password: string;
   confirmpassword: string;
+  image?: string;
   session_token?: string;
   roles?: Rol[];
 }

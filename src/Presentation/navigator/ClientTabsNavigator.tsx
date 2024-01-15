@@ -13,7 +13,6 @@ export const ClientTabsNavigator = () => {
         component={ClientCategoryListScreen}
         options={{
           title: "Categorías", // Esto es para lo de la parte superior
-          // headerShown: false,
           tabBarLabel: "Categorías",
           tabBarIcon: ({ color }) => (
             <Image
@@ -43,6 +42,7 @@ export const ClientTabsNavigator = () => {
         options={{
           title: "Perfil",
           tabBarLabel: "Perfil",
+          headerShown: false,
           tabBarIcon: ({ color }) => (
             <Image
               source={require("../../../assets/user_menu.png")}
