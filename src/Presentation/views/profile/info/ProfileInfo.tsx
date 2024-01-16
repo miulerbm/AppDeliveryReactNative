@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Image, Text, TouchableOpacity, View } from "react-native";
 import useViewModel from "./ViewModel";
 import { StackNavigationProp, StackScreenProps } from "@react-navigation/stack";
@@ -9,7 +9,13 @@ import { RoundedButton } from "../../../components/RoundedButton";
 
 export const ProfileInfoScreen = () => {
   const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
-  const { removeSession, user } = useViewModel();
+  const { user, removeUserSession } = useViewModel();
+
+  useEffect(() => {
+    if (user.id == "") {
+      navigation.replace("HomeScreen");
+    }
+  }, [user]);
 
   return (
     <View style={styles.container}>
@@ -21,8 +27,7 @@ export const ProfileInfoScreen = () => {
       <TouchableOpacity
         style={styles.logout}
         onPress={() => {
-          removeSession();
-          navigation.replace("HomeScreen");
+          removeUserSession();
         }}
       >
         <Image
@@ -32,7 +37,9 @@ export const ProfileInfoScreen = () => {
       </TouchableOpacity>
 
       <View style={styles.logoContainer}>
-        <Image source={{ uri: user?.image }} style={styles.logoImage} />
+        {user?.image !== "" && (
+          <Image source={{ uri: user?.image }} style={styles.logoImage} />
+        )}
       </View>
 
       <View style={styles.form}>

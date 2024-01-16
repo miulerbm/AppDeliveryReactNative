@@ -34,7 +34,7 @@ export const HomeScreen = ({ navigation, route }: Props) => {
 
   useEffect(() => {
     // Cuando cambie el estado del user:
-    if (user?.id !== null && user?.id !== undefined) {
+    if (user?.id !== null && user?.id !== undefined && user?.id !== "") {
       // Validamos si el usuario tiene más de un rol:
       if (user.roles?.length! > 1) {
         navigation.replace("RolesScreen");

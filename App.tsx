@@ -9,6 +9,7 @@ import { AdminTabsNavigator } from "./src/Presentation/navigator/AdminTabsNaviga
 import { ClientTabsNavigator } from "./src/Presentation/navigator/ClientTabsNavigator";
 import { ProfileUpdateScreen } from "./src/Presentation/views/profile/update/ProfileUpdate";
 import { User } from "./src/Domain/entities/User";
+import { UserProvider } from "./src/Presentation/context/UserContext";
 
 // Necesitamos definir una configuración para manejar las pantallas:
 // Como, el tipo de dato que se le va a pasar y que van a mostrar las pantallas
@@ -30,52 +31,61 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 const App = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
-        {/*   Este elemento va a contener todas las pantallas */}
-        {/* El orden en el que van, debe ser la principal, luego secundaria, etc... */}
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen
-          name="RegisterScreen"
-          component={RegisterScreen}
-          options={{
-            headerShown: true,
-            title: "Nuevo Usuario",
+      <UserState>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
           }}
-        />
+        >
+          {/*   Este elemento va a contener todas las pantallas */}
+          {/* El orden en el que van, debe ser la principal, luego secundaria, etc... */}
+          <Stack.Screen name="HomeScreen" component={HomeScreen} />
+          <Stack.Screen
+            name="RegisterScreen"
+            component={RegisterScreen}
+            options={{
+              headerShown: true,
+              title: "Nuevo Usuario",
+            }}
+          />
 
-        <Stack.Screen
-          name="RolesScreen"
-          component={RolesScreen}
-          options={{
-            headerShown: true,
-            title: "Selecciona un rol",
-          }}
-        />
+          <Stack.Screen
+            name="RolesScreen"
+            component={RolesScreen}
+            options={{
+              headerShown: true,
+              title: "Selecciona un rol",
+            }}
+          />
 
-        <Stack.Screen
-          name="AdminTabsNavigator"
-          component={AdminTabsNavigator}
-        />
-        <Stack.Screen
-          name="ClientTabsNavigator"
-          component={ClientTabsNavigator}
-        />
+          <Stack.Screen
+            name="AdminTabsNavigator"
+            component={AdminTabsNavigator}
+          />
+          <Stack.Screen
+            name="ClientTabsNavigator"
+            component={ClientTabsNavigator}
+          />
 
-        <Stack.Screen
-          name="ProfileUpdateScreen"
-          component={ProfileUpdateScreen}
-          options={{
-            headerShown: true,
-            title: "Actualizar usuario",
-          }}
-        />
-      </Stack.Navigator>
+          <Stack.Screen
+            name="ProfileUpdateScreen"
+            component={ProfileUpdateScreen}
+            options={{
+              headerShown: true,
+              title: "Actualizar usuario",
+            }}
+          />
+        </Stack.Navigator>
+      </UserState>
     </NavigationContainer>
   );
+};
+
+// Instanciamos el UserContext para utilizar las variables en un contexto global
+// Ahora, el UserState propaga información a todas las pantallas que encierra
+
+const UserState = ({ children }: any) => {
+  return <UserProvider>{children}</UserProvider>;
 };
 
 export default App;

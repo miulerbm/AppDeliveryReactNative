@@ -1,17 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { RemoveUserLocalUseCase } from "../../../../Domain/useCases/userLocal/RemoveUserLocal";
 import { useUserLocal } from "../../../hooks/useUserLocal";
+import { UserContext } from "../../../context/UserContext";
 
 export const ProfileInfoViewModel = () => {
-  // Traemos un usuario con el custom Hook:
-  const { user } = useUserLocal();
+  const { user, removeUserSession } = useContext(UserContext);
 
-  // Método para remover la sesión:
-  const removeSession = async () => {
-    await RemoveUserLocalUseCase();
-  };
-
-  return { removeSession, user };
+  return { removeUserSession, user };
 };
 
 export default ProfileInfoViewModel;
