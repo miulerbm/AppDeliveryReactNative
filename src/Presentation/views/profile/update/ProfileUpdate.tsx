@@ -33,6 +33,7 @@ export const ProfileUpdateScreen = ({ navigation, route }: Props) => {
     phone,
     loading,
     errorMessage,
+    successMessage,
     onChange,
     onChangeInfoUpdate,
     update,
@@ -51,6 +52,12 @@ export const ProfileUpdateScreen = ({ navigation, route }: Props) => {
       ToastAndroid.show(errorMessage, ToastAndroid.LONG);
     }
   }, [errorMessage]);
+
+  useEffect(() => {
+    if (successMessage != "") {
+      ToastAndroid.show(successMessage, ToastAndroid.LONG);
+    }
+  }, [successMessage]);
 
   return (
     <View style={styles.container}>
