@@ -25,6 +25,7 @@ interface Props
 export const ProfileUpdateScreen = ({ navigation, route }: Props) => {
   // Accedemos a los campos
 
+  const { user } = route.params;
   const {
     name,
     lastname,
@@ -32,13 +33,12 @@ export const ProfileUpdateScreen = ({ navigation, route }: Props) => {
     phone,
     loading,
     errorMessage,
-    user,
     onChange,
     onChangeInfoUpdate,
-    register,
+    update,
     pickImage,
     takePhoto,
-  } = useViewModel();
+  } = useViewModel(user);
 
   // Manejo de estados del Modal:
   const [modalVisible, setModalVisible] = useState(false);
@@ -51,12 +51,6 @@ export const ProfileUpdateScreen = ({ navigation, route }: Props) => {
       ToastAndroid.show(errorMessage, ToastAndroid.LONG);
     }
   }, [errorMessage]);
-
-  // UseEffect para por cada cambio de estado de user, se establezcan los valores que ya existen en
-  // Los campos del formulario de update
-  useEffect(() => {
-    onChangeInfoUpdate(user?.name!, user?.lastname!, user?.phone!);
-  }, [user]);
 
   return (
     <View style={styles.container}>
@@ -110,7 +104,7 @@ export const ProfileUpdateScreen = ({ navigation, route }: Props) => {
           ></CustomTextInput>
 
           <View style={{ marginTop: 30 }}>
-            <RoundedButton text="CONFIRMAR" onPress={() => register()} />
+            <RoundedButton text="CONFIRMAR" onPress={() => update()} />
           </View>
         </ScrollView>
       </View>

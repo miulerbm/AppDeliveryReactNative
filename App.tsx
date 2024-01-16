@@ -8,6 +8,7 @@ import { RolesScreen } from "./src/Presentation/views/roles/Roles";
 import { AdminTabsNavigator } from "./src/Presentation/navigator/AdminTabsNavigator";
 import { ClientTabsNavigator } from "./src/Presentation/navigator/ClientTabsNavigator";
 import { ProfileUpdateScreen } from "./src/Presentation/views/profile/update/ProfileUpdate";
+import { User } from "./src/Domain/entities/User";
 
 // Necesitamos definir una configuración para manejar las pantallas:
 // Como, el tipo de dato que se le va a pasar y que van a mostrar las pantallas
@@ -19,7 +20,7 @@ export type RootStackParamList = {
   RolesScreen: undefined;
   AdminTabsNavigator: undefined;
   ClientTabsNavigator: undefined;
-  ProfileUpdateScreen: undefined;
+  ProfileUpdateScreen: { user: User };
 };
 
 // Declaramos que la función va retornar un objeto del tipo RootStackParamList

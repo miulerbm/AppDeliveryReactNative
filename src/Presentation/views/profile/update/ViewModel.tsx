@@ -1,35 +1,22 @@
 import React, { useState } from "react";
 import { ApiDelivery } from "../../../../Data/sources/remote/api/ApiDelivery";
-import { RegisterAuthUseCase } from "../../../../Domain/useCases/auth/RegisterAuth";
-import { RegisterWithImageAuthUseCase } from "../../../../Domain/useCases/auth/RegisterWithImageAuth";
 import * as ImagePicker from "expo-image-picker";
 // Importamos el caso de uso que permite almacenar la sesión del usuario:
 import { SaveUserLocalUseCase } from "../../../../Domain/useCases/userLocal/SaveUserLocal";
 // También el hook para traer la sesión del usuario
 import { useUserLocal } from "../../../hooks/useUserLocal";
+import { UpdateUserUseCase } from "../../../../Domain/useCases/user/UpdateUser";
+import { UpdateWithImageUserUseCase } from "../../../../Domain/useCases/user/UpdateWithImageUser";
+import { User } from "../../../../Domain/entities/User";
+import { ResponseApiDelivery } from "../../../../Data/sources/remote/models/ResponseApiDelivery";
 
-const ProfileUpdateViewModel = () => {
+const ProfileUpdateViewModel = (user: User) => {
   const [errorMessage, setErrorMessage] = useState("");
-
-  const [values, setValues] = useState({
-    name: "",
-    lastname: "",
-    phone: "",
-    email: "",
-    image: "",
-    password: "",
-    confirmpassword: "",
-  });
-
-  // State Loading para manejar si se está cargando o no una imagen:
+  const [values, setValues] = useState(user);
   const [loading, setLoading] = useState(false);
-
-  // useState para manejar la imagen:
   const [file, setFile] = useState<ImagePicker.ImagePickerAsset>();
-  // Creamos una const para traer el user:
-  const { user, getUserSession } = useUserLocal();
+  const { getUserSession } = useUserLocal();
 
-  // Método para seleccionar la imagen:
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -70,21 +57,20 @@ const ProfileUpdateViewModel = () => {
     setValues({ ...values, name, lastname, phone });
   };
 
-  const register = async () => {
+  const update = async () => {
     if (isValidForm()) {
-      // Establecemos al Loading en True al iniciar el registro:
       setLoading(true);
-      // Si todo es validado:
-      // const response = await RegisterAuthUseCase(values);
-      const response = await RegisterWithImageAuthUseCase(values, file!); // file puede venir como nulo!
-      // Una vez terminado el registro y se ha obtenido una respuesta, ponemos al Loading en false:
+      let response = {} as ResponseApiDelivery;
+      if (values.image?.includes("https://")) {
+        response = await UpdateUserUseCase(values);
+      } else {
+        response = await UpdateWithImageUserUseCase(values, file!);
+      }
+
       setLoading(false);
-
       console.log("RESULT", JSON.stringify(response));
-
       if (response.success) {
         await SaveUserLocalUseCase(response.data);
-        // Traemos el hook para recargar el estado del usuario, y que nos lleve a la siguiente pantalla:
         getUserSession();
       } else {
         setErrorMessage(response.message);
@@ -104,33 +90,8 @@ const ProfileUpdateViewModel = () => {
       return false;
     }
 
-    if (values.email === "") {
-      setErrorMessage("Ingresa tu correo electrónico");
-      return false;
-    }
-
     if (values.phone === "") {
       setErrorMessage("Ingresa tu teléfono");
-      return false;
-    }
-
-    if (values.password === "") {
-      setErrorMessage("Ingresa tu contraseña");
-      return false;
-    }
-
-    if (values.confirmpassword === "") {
-      setErrorMessage("Confirma tu contraseña");
-      return false;
-    }
-
-    if (values.password !== values.confirmpassword) {
-      setErrorMessage("Las contraseñas no coinciden");
-      return false;
-    }
-
-    if (values.image === "") {
-      setErrorMessage("Seleccione una imagen");
       return false;
     }
 
@@ -141,7 +102,7 @@ const ProfileUpdateViewModel = () => {
     ...values,
     onChange,
     onChangeInfoUpdate,
-    register,
+    update,
     pickImage,
     takePhoto,
     errorMessage,
