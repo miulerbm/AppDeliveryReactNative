@@ -14,7 +14,7 @@ export const ProfileInfoScreen = () => {
   return (
     <View style={styles.container}>
       <Image
-        source={require("../../../../../assets/chef.jpg")}
+        source={require("../../../../../assets/city.jpg")}
         style={styles.imageBackground}
       />
 
@@ -72,7 +72,9 @@ export const ProfileInfoScreen = () => {
         </View>
 
         <RoundedButton
-          onPress={() => {}}
+          onPress={() => {
+            navigation.navigate("ProfileUpdateScreen");
+          }}
           text="ACTUALIZAR INFORMACIÓN"
         ></RoundedButton>
       </View>

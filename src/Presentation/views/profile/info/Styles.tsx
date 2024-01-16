@@ -26,12 +26,14 @@ const ProfileInfoStyles = StyleSheet.create({
   logoContainer: {
     position: "absolute",
     alignSelf: "center",
-    top: "15%",
+    top: "11%",
   },
   logoImage: {
-    width: 180,
-    height: 180,
+    width: 150,
+    height: 150,
     borderRadius: 100,
+    borderColor: "white",
+    borderWidth: 2,
   },
   logoText: {
     color: "white",

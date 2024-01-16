@@ -7,6 +7,7 @@ import { ProfileInfoScreen } from "./src/Presentation/views/profile/info/Profile
 import { RolesScreen } from "./src/Presentation/views/roles/Roles";
 import { AdminTabsNavigator } from "./src/Presentation/navigator/AdminTabsNavigator";
 import { ClientTabsNavigator } from "./src/Presentation/navigator/ClientTabsNavigator";
+import { ProfileUpdateScreen } from "./src/Presentation/views/profile/update/ProfileUpdate";
 
 // Necesitamos definir una configuración para manejar las pantallas:
 // Como, el tipo de dato que se le va a pasar y que van a mostrar las pantallas
@@ -18,6 +19,7 @@ export type RootStackParamList = {
   RolesScreen: undefined;
   AdminTabsNavigator: undefined;
   ClientTabsNavigator: undefined;
+  ProfileUpdateScreen: undefined;
 };
 
 // Declaramos que la función va retornar un objeto del tipo RootStackParamList
@@ -60,6 +62,15 @@ const App = () => {
         <Stack.Screen
           name="ClientTabsNavigator"
           component={ClientTabsNavigator}
+        />
+
+        <Stack.Screen
+          name="ProfileUpdateScreen"
+          component={ProfileUpdateScreen}
+          options={{
+            headerShown: true,
+            title: "Actualizar usuario",
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
