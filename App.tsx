@@ -10,6 +10,7 @@ import { ClientTabsNavigator } from "./src/Presentation/navigator/ClientTabsNavi
 import { ProfileUpdateScreen } from "./src/Presentation/views/profile/update/ProfileUpdate";
 import { User } from "./src/Domain/entities/User";
 import { UserProvider } from "./src/Presentation/context/UserContext";
+import { AdminCategoryCreateScreen } from "./src/Presentation/views/admin/category/create/CategoryCreate";
 
 // Necesitamos definir una configuración para manejar las pantallas:
 // Como, el tipo de dato que se le va a pasar y que van a mostrar las pantallas
@@ -22,6 +23,7 @@ export type RootStackParamList = {
   AdminTabsNavigator: undefined;
   ClientTabsNavigator: undefined;
   ProfileUpdateScreen: { user: User };
+  AdminCategoryCreateScreen: undefined;
 };
 
 // Declaramos que la función va retornar un objeto del tipo RootStackParamList
@@ -73,6 +75,15 @@ const App = () => {
             options={{
               headerShown: true,
               title: "Actualizar usuario",
+            }}
+          />
+
+          <Stack.Screen
+            name="AdminCategoryCreateScreen"
+            component={AdminCategoryCreateScreen}
+            options={{
+              headerShown: true,
+              title: "Nueva categoría",
             }}
           />
         </Stack.Navigator>

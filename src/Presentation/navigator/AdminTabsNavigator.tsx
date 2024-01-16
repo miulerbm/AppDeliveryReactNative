@@ -2,7 +2,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { AdminCategoryListScreen } from "../views/admin/category/list/CategoryList";
 import { AdminOrderListScreen } from "../views/admin/order/list/OrderList";
 import { ProfileInfoScreen } from "../views/profile/info/ProfileInfo";
-import { Image } from "react-native";
+import { Image, TouchableOpacity, StyleSheet } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -12,7 +12,7 @@ export const AdminTabsNavigator = () => {
       <Tab.Screen
         name="AdminCategoryListScreen"
         component={AdminCategoryListScreen}
-        options={{
+        options={({ route, navigation }) => ({
           title: "Categorías",
           tabBarLabel: "Categorías",
           tabBarIcon: ({ color }) => (
@@ -21,7 +21,17 @@ export const AdminTabsNavigator = () => {
               style={{ width: 25, height: 25 }}
             />
           ),
-        }}
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("AdminCategoryCreateScreen")}
+            >
+              <Image
+                source={require("../../../assets/add.png")}
+                style={{ width: 35, height: 35, marginRight: 15 }}
+              />
+            </TouchableOpacity>
+          ),
+        })}
       />
       <Tab.Screen
         name="AdminOrderListScreen"
