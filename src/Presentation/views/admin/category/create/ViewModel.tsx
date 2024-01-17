@@ -17,10 +17,11 @@ const AdminCategoryCreateViewModel = () => {
   };
 
   const createCategory = async () => {
+    setLoading(true);
     const response = await CreateCategoryUseCase(values, file!);
-    if (response.success) {
-      setResponseMessage(response.message);
-    }
+    setLoading(false);
+    setResponseMessage(response.message);
+    resetForm();
   };
 
   const pickImage = async () => {
@@ -48,6 +49,11 @@ const AdminCategoryCreateViewModel = () => {
       onChange("image", result.assets[0].uri);
       setFile(result.assets[0]);
     }
+  };
+
+  // Método para limpiar el formulario luego de crear la categoría
+  const resetForm = async () => {
+    setValues({ name: "", description: "", image: "" });
   };
 
   return {
