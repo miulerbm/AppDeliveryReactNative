@@ -3,6 +3,8 @@ import { ResponseApiDelivery } from "../../Data/sources/remote/models/ResponseAp
 import { Category } from "../entities/Category";
 
 export interface CategoryRepository {
+  getAll(): Promise<Category[]>;
+
   create(
     category: Category,
     file: ImagePickerAsset

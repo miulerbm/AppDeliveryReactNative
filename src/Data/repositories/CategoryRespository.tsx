@@ -10,6 +10,20 @@ import mime from "mime";
 import { AxiosError } from "axios";
 
 export class CategoryRepositoryImpl implements CategoryRepository {
+  async getAll(): Promise<Category[]> {
+    try {
+      const response = await ApiDelivery.get<Category[]>("/categories/getAll");
+      console.log("CATEGORIES: " + JSON.stringify(response.data));
+
+      return Promise.resolve(response.data);
+    } catch (error) {
+      let e = error as AxiosError;
+      console.log("ERROR: " + JSON.stringify(e.response?.data));
+
+      return Promise.resolve([]);
+    }
+  }
+
   async create(
     category: Category,
     file: ImagePickerAsset
