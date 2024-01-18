@@ -9,4 +9,6 @@ export interface CategoryRepository {
     category: Category,
     file: ImagePickerAsset
   ): Promise<ResponseApiDelivery>;
+
+  remove(id: string): Promise<ResponseApiDelivery>;
 }
