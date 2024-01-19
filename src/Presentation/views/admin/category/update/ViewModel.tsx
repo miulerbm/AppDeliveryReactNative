@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
-import { CreateCategoryUseCase } from "../../../../../Domain/useCases/category/CreateCategory";
+import { UpdateCategoryUseCase } from "../../../../../Domain/useCases/category/UpdateCategory";
+import { UpdateWithImageCategoryUseCase } from "../../../../../Domain/useCases/category/UpdateWithImageCategory";
 import { Category } from "../../../../../Domain/entities/Category";
+import { ResponseApiDelivery } from "../../../../../Data/sources/remote/models/ResponseApiDelivery";
 
 const AdminCategoryUpdateViewModel = (category: Category) => {
   const [values, setValues] = useState(category);
@@ -13,12 +15,19 @@ const AdminCategoryUpdateViewModel = (category: Category) => {
     setValues({ ...values, [property]: value });
   };
 
-  const createCategory = async () => {
+  const updateCategory = async () => {
+    // MÉTODO update QUE CONSIDERA DOS CASOS: CON Y SIN IMAGEN
     setLoading(true);
-    const response = await CreateCategoryUseCase(values, file!);
+    let response = {} as ResponseApiDelivery;
+    if (values.image?.includes("https://")) {
+      // ACTUALIZAR SIN IMAGEN
+      response = await UpdateCategoryUseCase(values);
+    } else {
+      // ACTUALIZAR CON IMAGEN
+      response = await UpdateWithImageCategoryUseCase(values, file!);
+    }
     setLoading(false);
     setResponseMessage(response.message);
-    resetForm();
   };
 
   const pickImage = async () => {
@@ -48,17 +57,12 @@ const AdminCategoryUpdateViewModel = (category: Category) => {
     }
   };
 
-  // Método para limpiar el formulario luego de crear la categoría
-  const resetForm = async () => {
-    setValues({ name: "", description: "", image: "" });
-  };
-
   return {
     ...values,
     onChange,
     takePhoto,
     pickImage,
-    createCategory,
+    updateCategory,
     loading,
     responseMessage,
   };

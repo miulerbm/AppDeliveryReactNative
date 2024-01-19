@@ -10,5 +10,11 @@ export interface CategoryRepository {
     file: ImagePickerAsset
   ): Promise<ResponseApiDelivery>;
 
+  update(category: Category): Promise<ResponseApiDelivery>;
+  updateWithImage(
+    category: Category,
+    file: ImagePickerAsset
+  ): Promise<ResponseApiDelivery>;
+
   remove(id: string): Promise<ResponseApiDelivery>;
 }

@@ -30,7 +30,7 @@ export const AdminCategoryUpdateScreen = ({ navigation, route }: Props) => {
     onChange,
     takePhoto,
     pickImage,
-    createCategory,
+    updateCategory,
   } = useViewModel(category);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -79,7 +79,7 @@ export const AdminCategoryUpdateScreen = ({ navigation, route }: Props) => {
       <View style={styles.buttonContainer}>
         <RoundedButton
           text="ACTUALIZAR CATEGORÍA"
-          onPress={() => createCategory()}
+          onPress={() => updateCategory()}
         />
       </View>
 
