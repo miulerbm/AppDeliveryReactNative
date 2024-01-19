@@ -1,6 +1,9 @@
 import React from "react";
 import { Category } from "../../../../../Domain/entities/Category";
 import { Image, StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import { useNavigation } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { RootStackParamList } from "../../../../../../App";
 
 interface Props {
   category: Category;
@@ -9,6 +12,8 @@ interface Props {
 }
 
 export const AdminCategoryListItem = ({ category, remove }: Props) => {
+  // Utilizamos este objeto para pasar a la siguiente pantalla (actualizar categoría):
+  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
   return (
     <TouchableOpacity>
       <View style={styles.container}>
@@ -18,7 +23,14 @@ export const AdminCategoryListItem = ({ category, remove }: Props) => {
           <Text style={styles.description}>{category.description}</Text>
         </View>
         <View style={styles.actionContainer}>
-          <TouchableOpacity>
+          {/* Utilizando el navigation.navigate, pasamos al Update Category: */}
+          <TouchableOpacity
+            onPress={() =>
+              navigation.navigate("AdminCategoryUpdateScreen", {
+                category: category,
+              })
+            }
+          >
             <Image
               style={styles.actionImage}
               source={require("../../../../../../assets/edit.png")}
