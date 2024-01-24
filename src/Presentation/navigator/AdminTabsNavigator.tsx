@@ -3,19 +3,24 @@ import { AdminCategoryListScreen } from "../views/admin/category/list/CategoryLi
 import { AdminOrderListScreen } from "../views/admin/order/list/OrderList";
 import { ProfileInfoScreen } from "../views/profile/info/ProfileInfo";
 import { Image, TouchableOpacity, StyleSheet } from "react-native";
+import { AdminCategoryNavigator } from "./AdminCategoryNavigator";
 
 const Tab = createBottomTabNavigator();
 
 export const AdminTabsNavigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Tab.Screen
-        name="AdminCategoryListScreen"
-        component={AdminCategoryListScreen}
+        name="AdminCategoryNavigator"
+        component={AdminCategoryNavigator}
         options={({ route, navigation }) => ({
           title: "Categorías",
           tabBarLabel: "Categorías",
-          tabBarIcon: ({ color }) => (
+          tabBarIcon: () => (
             <Image
               source={require("../../../assets/list.png")}
               style={{ width: 25, height: 25 }}

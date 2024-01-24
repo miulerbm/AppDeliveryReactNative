@@ -1,32 +1,20 @@
-import React, { useState } from "react";
-import { Category } from "../../../../../Domain/entities/Category";
-import { GetAllCategoryUseCase } from "../../../../../Domain/useCases/category/GetAllCategory";
-import { DeleteCategoryUseCase } from "../../../../../Domain/useCases/category/DeleteCategory";
+import React, { useContext, useState } from "react";
+import { CategoryContext } from "../../../../context/CategoryContext";
 
 const AdminCategoryListViewModel = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
-
   const [responseMessage, setResponseMessage] = useState("");
-
-  const getCategories = async () => {
-    const result = await GetAllCategoryUseCase();
-    console.log("CATEGORIES: " + JSON.stringify(result));
-    setCategories(result);
-  };
+  const { categories, getCategories, remove } = useContext(CategoryContext);
 
   const deleteCategory = async (idCategory: string) => {
-    const result = await DeleteCategoryUseCase(idCategory);
+    const result = await remove(idCategory);
     setResponseMessage(result.message);
-    if (result.success) {
-      getCategories();
-    }
   };
 
   return {
     categories,
     responseMessage,
-    getCategories,
     deleteCategory,
+    getCategories,
   };
 };
 

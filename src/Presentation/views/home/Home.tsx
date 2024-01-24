@@ -11,10 +11,10 @@ import {
 import { RoundedButton } from "../../../Presentation/components/RoundedButton";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp, StackScreenProps } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../../App";
 import useViewModel from "./ViewModel";
 import { CustomTextInput } from "../../components/CustomTextInput";
 import styles from "./Styles";
+import { RootStackParamList } from "../../navigator/MainStackNavigator";
 
 // Vamos a cambiar que, el navigation se pase como un prop:
 

@@ -3,7 +3,7 @@ import { Category } from "../../../../../Domain/entities/Category";
 import { Image, StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../../../../../../App";
+import { CategoryStackParamList } from "../../../../navigator/AdminCategoryNavigator";
 
 interface Props {
   category: Category;
@@ -12,8 +12,10 @@ interface Props {
 }
 
 export const AdminCategoryListItem = ({ category, remove }: Props) => {
-  // Utilizamos este objeto para pasar a la siguiente pantalla (actualizar categoría):
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  // Utilizamos este objeto para pasar a la siguiente pantalla (actualizar categoría).
+  // Ahpra le pasamos el CategoryStackParamList
+  const navigation =
+    useNavigation<StackNavigationProp<CategoryStackParamList>>();
   return (
     <TouchableOpacity>
       <View style={styles.container}>
