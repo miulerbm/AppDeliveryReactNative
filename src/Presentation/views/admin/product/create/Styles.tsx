@@ -16,7 +16,7 @@ const AdminProductCreateStyles = StyleSheet.create({
   },
   form: {
     backgroundColor: "white",
-    height: "65%",
+    height: "70%",
     width: "100%",
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
@@ -25,13 +25,14 @@ const AdminProductCreateStyles = StyleSheet.create({
     bottom: 0,
   },
   buttonContainer: {
-    position: "absolute",
-    bottom: 20,
-    left: 20,
-    right: 20,
+    // position: "absolute",
+    // bottom: 20,
+    // left: 20,
+    // right: 20,
+    marginTop: 50,
   },
   categoryInfo: {
-    flexDirection: "row",
+    // flexDirection: "row",
     marginTop: 30,
     justifyContent: "center",
     alignItems: "center",
@@ -41,7 +42,10 @@ const AdminProductCreateStyles = StyleSheet.create({
     height: 30,
   },
   textCategory: {
-    marginLeft: 10,
+    // marginLeft: 10,
+    color: "gray",
+    fontSize: 17,
+    fontWeight: "bold",
   },
 });
 

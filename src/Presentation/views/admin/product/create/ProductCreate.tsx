@@ -15,12 +15,16 @@ import { ModalPickImage } from "../../../../components/ModalPickImage";
 import { MyColors, MyStyles } from "../../../../theme/AppTheme";
 import { StackScreenProps } from "@react-navigation/stack";
 import { ProductStackParamList } from "../../../../navigator/AdminProductNavigator";
+import { ModalPickMultipleImage } from "../../../../components/ModalPickMultipleImages";
+import { ScrollView } from "react-native";
 
 // Vamos a extraer la categoría que teníamos en los params de la pantalla padre (ProductList):
 interface Props
   extends StackScreenProps<ProductStackParamList, "AdminProductCreateScreen"> {}
 
 export const AdminProductCreateScreen = ({ navigation, route }: Props) => {
+  // En una constante guardamos el valor de la category (es un objeto que trae varias cosas.)
+  const { category } = route.params;
   const {
     name,
     description,
@@ -33,12 +37,12 @@ export const AdminProductCreateScreen = ({ navigation, route }: Props) => {
     onChange,
     takePhoto,
     pickImage,
-    createCategory,
-  } = useViewModel();
+    createProduct,
+  } = useViewModel(category);
 
   const [modalVisible, setModalVisible] = useState(false);
-  // En una constante guardamos el valor de la category (es un objeto que trae varias cosas.)
-  const { category } = route.params;
+  // Nuevo useState para trabajar con el número de la imagen:
+  const [numberImage, setNumberImage] = useState(1);
 
   useEffect(() => {
     if (responseMessage !== "") {
@@ -49,7 +53,13 @@ export const AdminProductCreateScreen = ({ navigation, route }: Props) => {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
-        <TouchableOpacity onPress={() => setModalVisible(true)}>
+        <TouchableOpacity
+          onPress={() => {
+            // Al presionar este touchable, establecemos que el número de la imagen es 1
+            setNumberImage(1);
+            setModalVisible(true);
+          }}
+        >
           {image1 == "" ? (
             <Image
               style={styles.image}
@@ -59,7 +69,12 @@ export const AdminProductCreateScreen = ({ navigation, route }: Props) => {
             <Image source={{ uri: image1 }} style={styles.image} />
           )}
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setModalVisible(true)}>
+        <TouchableOpacity
+          onPress={() => {
+            setNumberImage(2);
+            setModalVisible(true);
+          }}
+        >
           {image2 == "" ? (
             <Image
               style={styles.image}
@@ -69,7 +84,12 @@ export const AdminProductCreateScreen = ({ navigation, route }: Props) => {
             <Image source={{ uri: image2 }} style={styles.image} />
           )}
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => setModalVisible(true)}>
+        <TouchableOpacity
+          onPress={() => {
+            setNumberImage(3);
+            setModalVisible(true);
+          }}
+        >
           {image3 == "" ? (
             <Image
               style={styles.image}
@@ -82,49 +102,54 @@ export const AdminProductCreateScreen = ({ navigation, route }: Props) => {
       </View>
 
       <View style={styles.form}>
-        <CustomTextInput
-          placeholder="Nombre de del producto"
-          image={require("../../../../../../assets/categories.png")}
-          keyboardType="default"
-          value={name}
-          onChangeText={onChange}
-          property="name"
-        />
-        <CustomTextInput
-          placeholder="Descripción"
-          image={require("../../../../../../assets/description.png")}
-          keyboardType="default"
-          value={description}
-          onChangeText={onChange}
-          property="description"
-        />
-        <CustomTextInput
-          placeholder="Precio"
-          image={require("../../../../../../assets/price.png")}
-          keyboardType="default"
-          value={price}
-          onChangeText={onChange}
-          property="price"
-        />
-        <View style={styles.categoryInfo}>
-          <Image
-            style={styles.imageCategory}
-            source={require("../../../../../../assets/categories.png")}
+        <ScrollView>
+          <View style={styles.categoryInfo}>
+            <Image
+              style={styles.imageCategory}
+              source={require("../../../../../../assets/menu.png")}
+            />
+            <Text style={styles.textCategory}>Categoría Seleccionada: </Text>
+            <Text>{category.name}</Text>
+          </View>
+          <CustomTextInput
+            placeholder="Nombre de del producto"
+            image={require("../../../../../../assets/categories.png")}
+            keyboardType="default"
+            value={name}
+            onChangeText={onChange}
+            property="name"
           />
-          <Text style={styles.textCategory}>Categoría: </Text>
-          <Text>{category.name}</Text>
-        </View>
+          <CustomTextInput
+            placeholder="Descripción"
+            image={require("../../../../../../assets/description.png")}
+            keyboardType="default"
+            value={description}
+            onChangeText={onChange}
+            property="description"
+          />
+          <CustomTextInput
+            placeholder="Precio"
+            image={require("../../../../../../assets/price.png")}
+            keyboardType="numeric"
+            value={price}
+            onChangeText={onChange}
+            property="price"
+          />
+          <View style={styles.buttonContainer}>
+            <RoundedButton
+              text="CREAR PRODUCTO"
+              onPress={() => createProduct()}
+            />
+          </View>
+        </ScrollView>
       </View>
 
-      <View style={styles.buttonContainer}>
-        <RoundedButton text="CREAR PRODUCTO" onPress={() => createCategory()} />
-      </View>
-
-      <ModalPickImage
+      <ModalPickMultipleImage
         openGallery={pickImage}
         openCamera={takePhoto}
         modalUseState={modalVisible}
         setModalUseState={setModalVisible}
+        numberImage={numberImage}
       />
 
       {loading && (
