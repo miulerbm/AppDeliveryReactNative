@@ -7,6 +7,7 @@ import { AdminCategoryCreateScreen } from "../views/admin/category/create/Catego
 import { AdminCategoryUpdateScreen } from "../views/admin/category/update/CategoryUpdate";
 import { AdminCategoryListScreen } from "../views/admin/category/list/CategoryList";
 import { Image, TouchableOpacity } from "react-native";
+import { AdminProductNavigator } from "./AdminProductNavigator";
 
 // Este Stack manejará las 3 pantallas de Admin Category: List, Create, Edit
 // Será eruivalente al Main, solo que será solo para Admin Category Management
@@ -15,6 +16,7 @@ export type CategoryStackParamList = {
   AdminCategoryListScreen: undefined;
   AdminCategoryCreateScreen: undefined;
   AdminCategoryUpdateScreen: { category: Category };
+  AdminProductNavigator: { category: Category };
 };
 
 const Stack = createNativeStackNavigator<CategoryStackParamList>();
@@ -63,6 +65,12 @@ export const AdminCategoryNavigator = () => {
             headerShown: true,
             title: "Editar categoría",
           }}
+        />
+
+        {/* Definimos también el AdminProductNavigator: */}
+        <Stack.Screen
+          name="AdminProductNavigator"
+          component={AdminProductNavigator}
         />
       </Stack.Navigator>
     </CategoryState>
