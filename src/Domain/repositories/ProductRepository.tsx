@@ -11,4 +11,6 @@ export interface ProductRepository {
     product: Product,
     files: ImagePickerAsset[]
   ): Promise<ResponseApiDelivery>;
+  // Método para obtener products por category:
+  getProductsByCategory(id_category: string): Promise<Product[]>;
 }

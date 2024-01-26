@@ -12,6 +12,23 @@ import {
 // En los repositories de la carpeta Data, se implementa el código de cada método definido en el Domain
 // No te olvides de exportar la calse para usarla en los UseCases
 export class ProductRepositoryImpl implements ProductRepository {
+  async getProductsByCategory(id_category: string): Promise<Product[]> {
+    try {
+      // Implementando el método getProductsByCategory
+      const response = await ApiDelivery.get<Product[]>(
+        `/products/findByCategory/${id_category}`
+      );
+      return Promise.resolve(response.data);
+    } catch (error) {
+      let e = error as AxiosError;
+      console.log("ERROR: " + JSON.stringify(e.response?.data));
+      const apiError: ResponseApiDelivery = JSON.parse(
+        JSON.stringify(e.response?.data)
+      );
+      return Promise.resolve([]);
+    }
+  }
+
   async create(
     product: Product,
     files: ImagePickerAsset[]
