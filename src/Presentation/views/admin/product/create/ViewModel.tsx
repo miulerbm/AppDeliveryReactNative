@@ -3,6 +3,7 @@ import * as ImagePicker from "expo-image-picker";
 import { CreateCategoryUseCase } from "../../../../../Domain/useCases/category/CreateCategory";
 import { CategoryContext } from "../../../../context/CategoryContext";
 import { Category } from "../../../../../Domain/entities/Category";
+import { ProductContext } from "../../../../context/ProductContext";
 
 const AdminProductCreateViewModel = (category: Category) => {
   const [values, setValues] = useState({
@@ -13,7 +14,7 @@ const AdminProductCreateViewModel = (category: Category) => {
     image2: "",
     image3: "",
     price: "",
-    idCategory: category.id,
+    id_category: category.id,
   });
   const [responseMessage, setResponseMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -22,7 +23,7 @@ const AdminProductCreateViewModel = (category: Category) => {
   const [file2, setFile2] = useState<ImagePicker.ImagePickerAsset>();
   const [file3, setFile3] = useState<ImagePicker.ImagePickerAsset>();
 
-  const { create } = useContext(CategoryContext);
+  const { create } = useContext(ProductContext);
 
   const onChange = (property: string, value: any) => {
     setValues({ ...values, [property]: value });
@@ -30,11 +31,17 @@ const AdminProductCreateViewModel = (category: Category) => {
 
   const createProduct = async () => {
     console.log("PRODUCTO FORMULARIO", JSON.stringify(values));
-    // setLoading(true);
-    // const response = await create(values, file!);
-    // setLoading(false);
-    // setResponseMessage(response.message);
-    // resetForm();
+    let files = [];
+    files.push(file1!);
+    files.push(file2!);
+    files.push(file3!);
+    setLoading(true);
+    const response = await create(values, files!);
+    setLoading(false);
+    setResponseMessage(response.message);
+    if (response.success) {
+      resetForm();
+    }
   };
 
   const pickImage = async (numberImage: number) => {
@@ -90,7 +97,15 @@ const AdminProductCreateViewModel = (category: Category) => {
 
   // Método para limpiar el formulario luego de crear la categoría
   const resetForm = async () => {
-    // setValues({ name: "", description: "", image: "" });
+    setValues({
+      name: "",
+      description: "",
+      image1: "",
+      image2: "",
+      image3: "",
+      price: "",
+      id_category: category.id,
+    });
   };
 
   return {
