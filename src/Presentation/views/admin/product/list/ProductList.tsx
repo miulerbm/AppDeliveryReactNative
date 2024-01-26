@@ -4,6 +4,7 @@ import { FlatList, Text, View } from "react-native";
 import { ProductStackParamList } from "../../../../navigator/AdminProductNavigator";
 import { Category } from "../../../../../Domain/entities/Category";
 import useViewModel from "./ViewModel";
+import { AdminProductListItem } from "./Item";
 
 // Definimos las props desde las que accedemos a los params que nos manda el AdminProductNavigator:
 interface Props
@@ -22,11 +23,13 @@ export const AdminProductListScreen = ({ navigation, route }: Props) => {
 
   console.log("CATEGORY", JSON.stringify(category));
   return (
-    <View>
+    <View style={{ backgroundColor: "white" }}>
       <FlatList
         data={products}
         keyExtractor={(item) => item.id!}
-        renderItem={({ item }) => <Text>{item.name}</Text>}
+        renderItem={({ item }) => (
+          <AdminProductListItem product={item} remove={() => {}} />
+        )}
       />
     </View>
   );
