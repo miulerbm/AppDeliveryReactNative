@@ -13,4 +13,6 @@ export interface ProductRepository {
   ): Promise<ResponseApiDelivery>;
   // Método para obtener products por category:
   getProductsByCategory(id_category: string): Promise<Product[]>;
+  // método DELETE, se llamará "remove":
+  remove(product: Product): Promise<ResponseApiDelivery>;
 }

@@ -63,4 +63,20 @@ export class ProductRepositoryImpl implements ProductRepository {
       return Promise.resolve(apiError);
     }
   }
+
+  async remove(product: Product): Promise<ResponseApiDelivery> {
+    try {
+      const response = await ApiDelivery.delete<ResponseApiDelivery>(
+        `/products/delete/${product.id}`
+      );
+      return Promise.resolve(response.data);
+    } catch (error) {
+      let e = error as AxiosError;
+      console.log("ERROR: " + JSON.stringify(e.response?.data));
+      const apiError: ResponseApiDelivery = JSON.parse(
+        JSON.stringify(e.response?.data)
+      );
+      return Promise.resolve(apiError);
+    }
+  }
 }

@@ -4,6 +4,7 @@ import { ResponseApiDelivery } from "../../Data/sources/remote/models/ResponseAp
 import { createContext, useState } from "react";
 import { CreateProductUseCase } from "../../Domain/useCases/product/CreateProduct";
 import { GetProductsByCategoryUseCase } from "../../Domain/useCases/product/GetProductsByCategory";
+import { DeleteProductUseCase } from "../../Domain/useCases/product/DeleteProduct";
 
 export interface ProductContextProps {
   products: Product[];
@@ -12,6 +13,7 @@ export interface ProductContextProps {
     product: Product,
     files: ImagePickerAsset[]
   ): Promise<ResponseApiDelivery>;
+  remove(product: Product): Promise<ResponseApiDelivery>;
 }
 
 export const ProductContext = createContext({} as ProductContextProps);
@@ -33,12 +35,19 @@ export const ProductProvider = ({ children }: any) => {
     return response;
   };
 
+  const remove = async (product: Product): Promise<ResponseApiDelivery> => {
+    const response = await DeleteProductUseCase(product);
+    getProducts(product.id_category!);
+    return response;
+  };
+
   return (
     <ProductContext.Provider
       value={{
         products,
         getProducts,
         create,
+        remove,
       }}
     >
       {children}
