@@ -37,7 +37,7 @@ export const AdminProductUpdateScreen = ({ navigation, route }: Props) => {
     onChange,
     takePhoto,
     pickImage,
-    createProduct,
+    updateProduct,
   } = useViewModel(product, category);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -137,8 +137,8 @@ export const AdminProductUpdateScreen = ({ navigation, route }: Props) => {
           />
           <View style={styles.buttonContainer}>
             <RoundedButton
-              text="CREAR PRODUCTO"
-              onPress={() => createProduct()}
+              text="ACTUALIZAR PRODUCTO"
+              onPress={() => updateProduct()}
             />
           </View>
         </ScrollView>

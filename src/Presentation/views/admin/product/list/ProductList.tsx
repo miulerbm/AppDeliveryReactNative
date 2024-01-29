@@ -19,7 +19,9 @@ export const AdminProductListScreen = ({ navigation, route }: Props) => {
 
   // Traemos los productos con un useEffect:
   useEffect(() => {
-    getProducts(category.id!);
+    if (category.id !== undefined) {
+      getProducts(category.id!);
+    }
   }, []);
 
   // Otro useEffect para evaluar el estado del responseMessage:

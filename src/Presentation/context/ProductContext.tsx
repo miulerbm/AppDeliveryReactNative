@@ -5,6 +5,8 @@ import { createContext, useState } from "react";
 import { CreateProductUseCase } from "../../Domain/useCases/product/CreateProduct";
 import { GetProductsByCategoryUseCase } from "../../Domain/useCases/product/GetProductsByCategory";
 import { DeleteProductUseCase } from "../../Domain/useCases/product/DeleteProduct";
+import { UpdateProductUseCase } from "../../Domain/useCases/product/UpdateProduct";
+import { UpdateWithImageProductUseCase } from "../../Domain/useCases/product/UpdateWithImageProduct";
 
 export interface ProductContextProps {
   products: Product[];
@@ -13,6 +15,12 @@ export interface ProductContextProps {
     product: Product,
     files: ImagePickerAsset[]
   ): Promise<ResponseApiDelivery>;
+  updateWithImage(
+    product: Product,
+    files: ImagePickerAsset[]
+  ): Promise<ResponseApiDelivery>;
+  update(product: Product): Promise<ResponseApiDelivery>;
+
   remove(product: Product): Promise<ResponseApiDelivery>;
 }
 
@@ -35,6 +43,21 @@ export const ProductProvider = ({ children }: any) => {
     return response;
   };
 
+  const update = async (product: Product): Promise<ResponseApiDelivery> => {
+    const response = await UpdateProductUseCase(product);
+    getProducts(product.id_category!);
+    return response;
+  };
+
+  const updateWithImage = async (
+    product: Product,
+    files: ImagePickerAsset[]
+  ) => {
+    const response = await UpdateWithImageProductUseCase(product, files);
+    getProducts(product.id_category!);
+    return response;
+  };
+
   const remove = async (product: Product): Promise<ResponseApiDelivery> => {
     const response = await DeleteProductUseCase(product);
     getProducts(product.id_category!);
@@ -47,6 +70,8 @@ export const ProductProvider = ({ children }: any) => {
         products,
         getProducts,
         create,
+        updateWithImage,
+        update,
         remove,
       }}
     >
