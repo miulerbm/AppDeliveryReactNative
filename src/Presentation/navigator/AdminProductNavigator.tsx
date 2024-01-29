@@ -7,12 +7,15 @@ import { CategoryStackParamList } from "./AdminCategoryNavigator";
 import { AdminProductCreateScreen } from "../views/admin/product/create/ProductCreate";
 import { Image, TouchableOpacity } from "react-native";
 import { ProductProvider } from "../context/ProductContext";
+import { AdminProductUpdateScreen } from "../views/admin/product/update/ProductUpdate";
+import { Product } from "../../Domain/entities/Product";
 
 export type ProductStackParamList = {
   // Definimos las pantallas con la que este navigator trabajará
   AdminProductListScreen: { category: Category };
   // Añadimos la pantalla de AdminProductCreateScreen
   AdminProductCreateScreen: { category: Category };
+  AdminProductUpdateScreen: { category: Category; product: Product };
 };
 
 const Stack = createNativeStackNavigator<ProductStackParamList>();
@@ -62,6 +65,18 @@ export const AdminProductNavigator = ({ navigation, route }: Props) => {
           initialParams={{ category: route.params.category }}
           options={{
             title: "Nuevo Producto",
+            headerShown: true,
+          }}
+        />
+
+        <Stack.Screen
+          // Nuevo stack screen, crear producto
+          name="AdminProductUpdateScreen"
+          component={AdminProductUpdateScreen}
+          // Tenemos la opción de pasar los parámetros que vienen de la pantalla principal, o pasarlo
+          // cuando naveguemos desde la pantalla de ProductList
+          options={{
+            title: "Actualizar Producto",
             headerShown: true,
           }}
         />

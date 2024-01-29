@@ -3,20 +3,22 @@ import { Category } from "../../../../../Domain/entities/Category";
 import { Image, StyleSheet, View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { CategoryStackParamList } from "../../../../navigator/AdminCategoryNavigator";
 import { Product } from "../../../../../Domain/entities/Product";
+import { ProductStackParamList } from "../../../../navigator/AdminProductNavigator";
 
 interface Props {
   product: Product;
+  // Además del producto, recibiremos la categoría
+  category: Category;
   // Debemos pasarle el método delete a este item:
   remove: (product: Product) => void;
 }
 
-export const AdminProductListItem = ({ product, remove }: Props) => {
+export const AdminProductListItem = ({ product, category, remove }: Props) => {
   // Utilizamos este objeto para pasar a la siguiente pantalla (actualizar categoría).
   // Ahpra le pasamos el CategoryStackParamList
   const navigation =
-    useNavigation<StackNavigationProp<CategoryStackParamList>>();
+    useNavigation<StackNavigationProp<ProductStackParamList>>();
   return (
     <TouchableOpacity
     // Hacemos que, al presionar sobre un ítem, nos lleve a la pantalla AdminProductNavigator
@@ -34,11 +36,13 @@ export const AdminProductListItem = ({ product, remove }: Props) => {
         <View style={styles.actionContainer}>
           {/* Utilizando el navigation.navigate, pasamos al Update Category: */}
           <TouchableOpacity
-          // onPress={() =>
-          //   navigation.navigate("AdminCategoryUpdateScreen", {
-          //     category: category,
-          //   })
-          // }
+            // Al presionar en el botón edit debe mandarnos a la pantalla de Update:
+            onPress={() =>
+              navigation.navigate("AdminProductUpdateScreen", {
+                product: product,
+                category: category,
+              })
+            }
           >
             <Image
               style={styles.actionImage}

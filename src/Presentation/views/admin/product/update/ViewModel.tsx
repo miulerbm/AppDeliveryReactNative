@@ -4,18 +4,12 @@ import { CreateCategoryUseCase } from "../../../../../Domain/useCases/category/C
 import { CategoryContext } from "../../../../context/CategoryContext";
 import { Category } from "../../../../../Domain/entities/Category";
 import { ProductContext } from "../../../../context/ProductContext";
+import { Product } from "../../../../../Domain/entities/Product";
 
-const AdminProductCreateViewModel = (category: Category) => {
-  const [values, setValues] = useState({
-    // Para manejar los datos de un producto, definimos sus props:
-    name: "",
-    description: "",
-    image1: "",
-    image2: "",
-    image3: "",
-    price: 0,
-    id_category: category.id,
-  });
+const AdminProductUpdateViewModel = (product: Product, category: Category) => {
+  // En el useState pasamos el producto que estamos recibiendo por parámetro
+  // para cargar los valores que ya se tenían en los inputs
+  const [values, setValues] = useState(product);
   const [responseMessage, setResponseMessage] = useState("");
   const [loading, setLoading] = useState(false);
   // Manejamos los 3 archivos a subir:
@@ -119,4 +113,4 @@ const AdminProductCreateViewModel = (category: Category) => {
   };
 };
 
-export default AdminProductCreateViewModel;
+export default AdminProductUpdateViewModel;

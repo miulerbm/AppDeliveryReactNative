@@ -20,11 +20,11 @@ import { ScrollView } from "react-native";
 
 // Vamos a extraer la categoría que teníamos en los params de la pantalla padre (ProductList):
 interface Props
-  extends StackScreenProps<ProductStackParamList, "AdminProductCreateScreen"> {}
+  extends StackScreenProps<ProductStackParamList, "AdminProductUpdateScreen"> {}
 
-export const AdminProductCreateScreen = ({ navigation, route }: Props) => {
+export const AdminProductUpdateScreen = ({ navigation, route }: Props) => {
   // En una constante guardamos el valor de la category (es un objeto que trae varias cosas.)
-  const { category } = route.params;
+  const { category, product } = route.params;
   const {
     name,
     description,
@@ -38,7 +38,7 @@ export const AdminProductCreateScreen = ({ navigation, route }: Props) => {
     takePhoto,
     pickImage,
     createProduct,
-  } = useViewModel(category);
+  } = useViewModel(product, category);
 
   const [modalVisible, setModalVisible] = useState(false);
   // Nuevo useState para trabajar con el número de la imagen:
