@@ -3,6 +3,7 @@ import { FlatList, Text, View } from "react-native";
 import useViewModel from "./ViewModel";
 import { StackScreenProps } from "@react-navigation/stack";
 import { ClientStackParamList } from "../../../../navigator/ClientStackNavigator";
+import { ClientProductItem } from "./Item";
 
 // Accediendo a los params que llegan a la pantalla ClientProductListScreen
 // Los cuales son 'navigation' y 'route'
@@ -18,11 +19,13 @@ export const ClientProductListScreen = ({ navigation, route }: Props) => {
   }, []);
 
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: "white" }}>
       <FlatList
         data={products}
         keyExtractor={(item) => item.id!}
-        renderItem={({ item }) => <Text>{item.name}</Text>}
+        renderItem={({ item }) => (
+          <ClientProductItem product={item} navigation={navigation} />
+        )}
       />
     </View>
   );
