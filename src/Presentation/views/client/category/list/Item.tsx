@@ -27,11 +27,9 @@ export const ClientCategoryItem = ({
   return (
     <TouchableOpacity
       onPress={() => {
-        // if (rol.name == "ADMIN") {
-        //   navigation.replace("AdminTabsNavigator");
-        // } else if (rol.name == "CLIENTE") {
-        //   navigation.replace("ClientTabsNavigator");
-        // }
+        navigation.navigate("ClientProductListScreen", {
+          idCategory: category.id!,
+        });
       }}
       style={{ ...styles.container, height: height, width: width }}
     >
@@ -78,6 +76,6 @@ const styles = StyleSheet.create({
   },
   title: {
     color: "black",
-    fontSize: 18,
+    fontSize: 25,
   },
 });
