@@ -19,10 +19,9 @@ interface Props {
 export const ClientProductItem = ({ product, navigation }: Props) => {
   return (
     <TouchableOpacity
-    // Hacemos que, al presionar sobre un ítem, nos lleve a la pantalla AdminProductNavigator
-    // onPress={() =>
-    //   navigation.navigate("AdminProductNavigator", { category: category })
-    // }
+      onPress={() =>
+        navigation.navigate("ClientProductDetailScreen", { product: product })
+      }
     >
       <View style={styles.container}>
         <View style={styles.info}>
