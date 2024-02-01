@@ -12,13 +12,11 @@ interface Props
   extends StackScreenProps<ClientStackParamList, "ClientProductDetailScreen"> {}
 
 export const ClientProductDetailScreen = ({ navigation, route }: Props) => {
-  // Extraemos el product de las props del navigator:
   const { product } = route.params;
-  //Obteniendo el total de la pantalla:
   const width = Dimensions.get("window").width;
   const height = Dimensions.get("window").height;
-  // Accedemos a las funciones y variables del ViewModel:
-  const { productImageList } = useViewModel(product);
+  const { productImageList, quantity, price, addItem, removeItem } =
+    useViewModel(product);
 
   return (
     <View style={styles.container}>
@@ -29,7 +27,8 @@ export const ClientProductDetailScreen = ({ navigation, route }: Props) => {
           height={height} // Ajustando la altura del elemento
           autoPlay={true}
           data={productImageList}
-          scrollAnimationDuration={5000}
+          autoPlayInterval={10000}
+          scrollAnimationDuration={1000}
           // onSnapToItem={(index) => console.log("current index:", index)}
           renderItem={({ item }) => (
             <Image source={{ uri: item }} style={styles.productImage} />
@@ -54,19 +53,22 @@ export const ClientProductDetailScreen = ({ navigation, route }: Props) => {
 
           {/* ORDEN */}
           <Text style={styles.descriptionTitle}>Tu orden: </Text>
-          <Text style={styles.descriptionContent}>Cantidad:</Text>
-          <Text style={styles.descriptionContent}>Precio c/u:</Text>
+          <Text style={styles.descriptionContent}>Cantidad: {quantity}</Text>
+          <Text style={styles.descriptionContent}>Precio total: {price}</Text>
           <View style={styles.divider}></View>
         </View>
 
         <View style={styles.productActions}>
-          <TouchableOpacity style={styles.actionLess}>
+          <TouchableOpacity
+            onPress={() => removeItem()}
+            style={styles.actionLess}
+          >
             <Text style={styles.actionText}>-</Text>
           </TouchableOpacity>
           <View style={styles.quantity}>
-            <Text style={styles.actionText}>0</Text>
+            <Text style={styles.actionText}>{quantity}</Text>
           </View>
-          <TouchableOpacity style={styles.actionAdd}>
+          <TouchableOpacity onPress={() => addItem()} style={styles.actionAdd}>
             <Text style={styles.actionText}>+</Text>
           </TouchableOpacity>
 
@@ -75,6 +77,12 @@ export const ClientProductDetailScreen = ({ navigation, route }: Props) => {
           </View>
         </View>
       </View>
+      <TouchableOpacity onPress={() => navigation.pop()} style={styles.back}>
+        <Image
+          style={styles.backImage}
+          source={require("../../../../../../assets/back.png")}
+        />
+      </TouchableOpacity>
     </View>
   );
 };

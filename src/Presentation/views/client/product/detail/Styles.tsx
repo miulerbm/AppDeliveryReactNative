@@ -77,6 +77,15 @@ const ClientProductDetailStyles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  back: {
+    position: "absolute",
+    top: 30,
+    left: 15,
+  },
+  backImage: {
+    height: 40,
+    width: 40,
+  },
 });
 
 export default ClientProductDetailStyles;
