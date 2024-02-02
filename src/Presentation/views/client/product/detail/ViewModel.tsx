@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Product } from "../../../../../Domain/entities/Product";
+import { ShoppingBagContext } from "../../../../context/ShoppingBagContext";
 
 const ClientProductDetailViewModel = (product: Product) => {
   const productImageList: string[] = [
@@ -10,10 +11,28 @@ const ClientProductDetailViewModel = (product: Product) => {
 
   const [quantity, setQuantity] = useState(0);
   const [price, setPrice] = useState(0.0);
+  // extraemos los métodos y variables del shopping bag context:
+  const { shoppingBag, saveItem } = useContext(ShoppingBagContext);
+  console.log("BOLSA DE COMPRAS: " + JSON.stringify(shoppingBag));
+
+  useEffect(() => {
+    const index = shoppingBag.findIndex((p) => p.id == product.id);
+    if (index !== -1) {
+      // El producto sí existe dentro de la bolsa de compras:
+      setQuantity(shoppingBag[index].quantity!);
+    }
+  }, [shoppingBag]);
 
   useEffect(() => {
     setPrice(product.price * quantity);
   }, [quantity]);
+
+  const addToBag = () => {
+    if (quantity > 0) {
+      product.quantity = quantity;
+      saveItem(product);
+    }
+  };
 
   const addItem = () => {
     setQuantity(quantity + 1);
@@ -24,7 +43,15 @@ const ClientProductDetailViewModel = (product: Product) => {
     }
   };
 
-  return { quantity, price, productImageList, addItem, removeItem };
+  return {
+    quantity,
+    price,
+    productImageList,
+    shoppingBag,
+    addItem,
+    addToBag,
+    removeItem,
+  };
 };
 
 export default ClientProductDetailViewModel;
