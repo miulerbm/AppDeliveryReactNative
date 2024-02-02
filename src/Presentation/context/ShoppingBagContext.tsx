@@ -5,7 +5,9 @@ import { SaveShoppingBagUseCase } from "../../Domain/useCases/shoppingBag/SaveSh
 
 export interface ShoppingBagContextProps {
   shoppingBag: Product[]; // Es nuestra lista de productos
+  total: number;
   getShoppingBag(): Promise<void>;
+  getTotal(): Promise<void>;
   //método para agregar un elemento a la bolsa de compras:
   saveItem(product: Product): Promise<void>;
   deleteItem(product: Product): Promise<void>;
@@ -19,15 +21,33 @@ export const ShoppingBagProvider = ({ children }: any) => {
 
   // Definimos un estado llamado "Bolsa de compras"
   const [shoppingBag, setShoppingBag] = useState<Product[]>([]);
+  const [total, setTotal] = useState(0.0);
 
   // Con un useEffect actualizamos la lista cada que se añada un dato, o cuando llamemos al context:
   useEffect(() => {
     getShoppingBag();
   }, []);
 
+  // Vamos a crear un useEffect para escuchar cuando el valor a pagar cambie
+  // y así, llamamos a la función quen retorna el precio total:
+  useEffect(() => {
+    getTotal();
+  }, [shoppingBag]);
+
   const getShoppingBag = async (): Promise<void> => {
     const result = await GetShoppingBagUseCase();
     setShoppingBag(result);
+  };
+
+  // Método para obtener el total a pagar:
+  const getTotal = async (): Promise<void> => {
+    setTotal(0);
+    let totalPrice = 0;
+    shoppingBag.forEach((product) => {
+      // Por cada producto en el carro de compras, se añade el precio a pagar (según cantidad):
+      totalPrice = totalPrice + product.quantity! * product.price;
+    });
+    setTotal(totalPrice);
   };
 
   const saveItem = async (product: Product): Promise<void> => {
@@ -45,7 +65,7 @@ export const ShoppingBagProvider = ({ children }: any) => {
 
   const deleteItem = async (product: Product): Promise<void> => {
     const index = shoppingBag.findIndex((p) => p.id == product.id);
-    shoppingBag.splice(index);
+    shoppingBag.splice(index, 1);
     await SaveShoppingBagUseCase(shoppingBag);
     getShoppingBag();
   };
@@ -54,7 +74,9 @@ export const ShoppingBagProvider = ({ children }: any) => {
     <ShoppingBagContext.Provider
       value={{
         shoppingBag,
+        total,
         getShoppingBag,
+        getTotal,
         saveItem,
         deleteItem,
       }}

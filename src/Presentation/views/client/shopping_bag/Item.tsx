@@ -45,7 +45,7 @@ export const ShoppingBagItem = ({
             </TouchableOpacity>
           </View>
 
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => deleteItem(product)}>
             <Image
               style={styles.deleteItem}
               source={require("../../../../../assets/trash.png")}
