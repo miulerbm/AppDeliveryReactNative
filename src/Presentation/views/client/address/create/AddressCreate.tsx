@@ -1,0 +1,92 @@
+import React, { useEffect, useState } from "react";
+import {
+  ActivityIndicator,
+  Image,
+  Text,
+  ToastAndroid,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import styles from "./Styles";
+import { CustomTextInput } from "../../../../components/CustomTextInput";
+import useViewModel from "./ViewModel";
+import { RoundedButton } from "../../../../components/RoundedButton";
+import { ModalPickImage } from "../../../../components/ModalPickImage";
+import { MyColors, MyStyles } from "../../../../theme/AppTheme";
+
+export const ClientAddressCreateScreen = () => {
+  const {
+    address,
+    neighborhood,
+    refPoint,
+    responseMessage,
+    loading,
+    onChange,
+    createCategory,
+  } = useViewModel();
+
+  const [modalVisible, setModalVisible] = useState(false);
+
+  useEffect(() => {
+    if (responseMessage !== "") {
+      ToastAndroid.show(responseMessage, ToastAndroid.LONG);
+    }
+  }, [responseMessage]);
+
+  return (
+    <View style={styles.container}>
+      <TouchableOpacity
+        onPress={() => setModalVisible(true)}
+        style={styles.imageContainer}
+      >
+        <Image
+          style={styles.image}
+          source={require("../../../../../../assets/map.png")}
+        />
+      </TouchableOpacity>
+
+      <View style={styles.form}>
+        <CustomTextInput
+          placeholder="Nombre de la Dirección"
+          image={require("../../../../../../assets/categories.png")}
+          keyboardType="default"
+          value={address}
+          onChangeText={onChange}
+          property="address"
+        />
+        <CustomTextInput
+          placeholder="Barrio"
+          image={require("../../../../../../assets/description.png")}
+          keyboardType="default"
+          value={neighborhood}
+          onChangeText={onChange}
+          property="neighborhood"
+        />
+
+        <CustomTextInput
+          placeholder="Punto de referencia"
+          image={require("../../../../../../assets/description.png")}
+          keyboardType="default"
+          value={refPoint}
+          onChangeText={onChange}
+          property="refPoint"
+        />
+      </View>
+
+      <View style={styles.buttonContainer}>
+        <RoundedButton
+          text="CREAR DIRECCIÓN"
+          onPress={() => createCategory()}
+        />
+      </View>
+
+      {loading && (
+        <ActivityIndicator
+          style={MyStyles.loading}
+          size="large"
+          color={MyColors.primary}
+        />
+      )}
+    </View>
+  );
+};

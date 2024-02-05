@@ -4,8 +4,14 @@ import useViewModel from "./ViewModel";
 import { ShoppingBagItem } from "./Item";
 import { RoundedButton } from "../../../components/RoundedButton";
 import styles from "./Styles";
+import { StackScreenProps } from "@react-navigation/stack";
+import { ClientStackParamList } from "../../../navigator/ClientStackNavigator";
 
-export const ClientShoppingBagScreen = () => {
+// Definimos la interface Props para acceder a navigation y a route.
+interface Props
+  extends StackScreenProps<ClientStackParamList, "ClientShoppingBagScreen"> {}
+
+export const ClientShoppingBagScreen = ({ navigation, route }: Props) => {
   const { shoppingBag, total, addItem, subtractItem, deleteItem } =
     useViewModel();
 
@@ -29,7 +35,10 @@ export const ClientShoppingBagScreen = () => {
           <Text>${total}</Text>
         </View>
         <View style={styles.buttonAdd}>
-          <RoundedButton text="CONFIRMAR ORDEN" onPress={() => {}} />
+          <RoundedButton
+            text="CONFIRMAR ORDEN"
+            onPress={() => navigation.navigate("ClientAddressListScreen")}
+          />
         </View>
       </View>
     </View>
