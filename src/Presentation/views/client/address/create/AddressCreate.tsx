@@ -13,8 +13,13 @@ import useViewModel from "./ViewModel";
 import { RoundedButton } from "../../../../components/RoundedButton";
 import { ModalPickImage } from "../../../../components/ModalPickImage";
 import { MyColors, MyStyles } from "../../../../theme/AppTheme";
+import { StackScreenProps } from "@react-navigation/stack";
+import { ClientStackParamList } from "../../../../navigator/ClientStackNavigator";
 
-export const ClientAddressCreateScreen = () => {
+interface Props
+  extends StackScreenProps<ClientStackParamList, "ClientAddressCreateScreen"> {}
+
+export const ClientAddressCreateScreen = ({ navigation, route }: Props) => {
   const {
     address,
     neighborhood,
@@ -48,7 +53,7 @@ export const ClientAddressCreateScreen = () => {
       <View style={styles.form}>
         <CustomTextInput
           placeholder="Nombre de la Dirección"
-          image={require("../../../../../../assets/categories.png")}
+          image={require("../../../../../../assets/location.png")}
           keyboardType="default"
           value={address}
           onChangeText={onChange}
@@ -56,21 +61,26 @@ export const ClientAddressCreateScreen = () => {
         />
         <CustomTextInput
           placeholder="Barrio"
-          image={require("../../../../../../assets/description.png")}
+          image={require("../../../../../../assets/neighborhood.png")}
           keyboardType="default"
           value={neighborhood}
           onChangeText={onChange}
           property="neighborhood"
         />
 
-        <CustomTextInput
-          placeholder="Punto de referencia"
-          image={require("../../../../../../assets/description.png")}
-          keyboardType="default"
-          value={refPoint}
-          onChangeText={onChange}
-          property="refPoint"
-        />
+        <TouchableOpacity
+          onPress={() => navigation.navigate("ClientAddressMapScreen")}
+        >
+          <CustomTextInput
+            placeholder="Punto de referencia"
+            image={require("../../../../../../assets/ref_point.png")}
+            keyboardType="default"
+            value={refPoint}
+            onChangeText={onChange}
+            property="refPoint"
+            editable={false}
+          />
+        </TouchableOpacity>
       </View>
 
       <View style={styles.buttonContainer}>

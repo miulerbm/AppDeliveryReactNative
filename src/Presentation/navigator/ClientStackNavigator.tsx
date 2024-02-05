@@ -8,6 +8,7 @@ import { Image, TouchableOpacity } from "react-native";
 import { ClientShoppingBagScreen } from "../views/client/shopping_bag/ShoppingBag";
 import { ClientAddressListScreen } from "../views/client/address/list/AddressList";
 import { ClientAddressCreateScreen } from "../views/client/address/create/AddressCreate";
+import { ClientAddressMapScreen } from "../views/client/address/map/AddressMap";
 
 export type ClientStackParamList = {
   ClientCategoryListScreen: undefined;
@@ -16,6 +17,7 @@ export type ClientStackParamList = {
   ClientShoppingBagScreen: undefined;
   ClientAddressListScreen: undefined;
   ClientAddressCreateScreen: undefined;
+  ClientAddressMapScreen: undefined;
 };
 
 const Stack = createNativeStackNavigator<ClientStackParamList>();
@@ -99,6 +101,15 @@ export const ClientStackNavigator = () => {
           component={ClientAddressCreateScreen}
           options={{
             title: "Nueva dirección",
+            headerShown: true,
+          }}
+        />
+
+        <Stack.Screen
+          name={"ClientAddressMapScreen"}
+          component={ClientAddressMapScreen}
+          options={{
+            title: "Ubica tu direción en el mapa",
             headerShown: true,
           }}
         />
