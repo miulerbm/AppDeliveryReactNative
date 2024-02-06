@@ -7,7 +7,8 @@ import { RoundedButton } from "../../../../components/RoundedButton";
 import stylesMap from "./StylesMap";
 
 export const ClientAddressMapScreen = () => {
-  const { messagePermissions, position, mapRef } = useViewModel();
+  const { messagePermissions, position, mapRef, name, onRegionChangeComplete } =
+    useViewModel();
 
   useEffect(() => {
     if (messagePermissions != "") {
@@ -22,6 +23,9 @@ export const ClientAddressMapScreen = () => {
         customMapStyle={stylesMap}
         style={{ height: "100%", width: "100%" }}
         provider={PROVIDER_GOOGLE}
+        onRegionChangeComplete={(region) => {
+          onRegionChangeComplete(region.latitude, region.longitude);
+        }}
       />
 
       <Image
@@ -30,7 +34,7 @@ export const ClientAddressMapScreen = () => {
       />
 
       <View style={styles.refPoint}>
-        <Text style={styles.refPointText}>Punto de referencia</Text>
+        <Text style={styles.refPointText}>{name}</Text>
       </View>
 
       <View style={styles.buttonRefPoint}>

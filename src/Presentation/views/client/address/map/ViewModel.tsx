@@ -4,8 +4,13 @@ import MapView, { Camera } from "react-native-maps";
 
 const ClientAddressMapViewModel = () => {
   // Nuevo state para la posición:
-  const [position, setPosition] = useState<Location.LocationObjectCoords>();
   const [messagePermissions, setMessagePermissions] = useState("");
+  const [refPoint, setRefPoint] = useState({
+    name: "",
+    latitude: 0.0,
+    longitude: 0.0,
+  });
+  const [position, setPosition] = useState<Location.LocationObjectCoords>();
   const mapRef = useRef<MapView | null>(null);
 
   // Con un useEffect disparamos el código para obtener location apenas llamemos al ViewModel
@@ -21,6 +26,35 @@ const ClientAddressMapViewModel = () => {
 
     requestPermissions();
   }, []);
+
+  // Método para ver lo del cambio de punto de referencia
+  const onRegionChangeComplete = async (
+    latitude: number,
+    longitude: number
+  ) => {
+    try {
+      const place = await Location.reverseGeocodeAsync({
+        latitude: latitude,
+        longitude: longitude,
+      });
+      let city;
+      let street;
+      let streetNumber;
+
+      place.find((p) => {
+        city = p.city;
+        street = p.street;
+        streetNumber = p.streetNumber;
+        setRefPoint({
+          name: `${street}, ${streetNumber}, ${city}`,
+          latitude: latitude,
+          longitude: longitude,
+        });
+      });
+    } catch (error) {
+      console.log("ERROR: " + error);
+    }
+  };
 
   // Ahora obtenenemos la ubicación:
   const startForegroundUpdate = async () => {
@@ -53,6 +87,8 @@ const ClientAddressMapViewModel = () => {
     messagePermissions,
     position,
     mapRef,
+    ...refPoint, // Pasaremos las 3 variables dentro del objeto refPoint
+    onRegionChangeComplete,
   };
 };
 
