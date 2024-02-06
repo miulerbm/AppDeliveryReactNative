@@ -5,10 +5,23 @@ import styles from "./Styles";
 import useViewModel from "./ViewModel";
 import { RoundedButton } from "../../../../components/RoundedButton";
 import stylesMap from "./StylesMap";
+import { StackScreenProps } from "@react-navigation/stack";
+import { ClientStackParamList } from "../../../../navigator/ClientStackNavigator";
 
-export const ClientAddressMapScreen = () => {
-  const { messagePermissions, position, mapRef, name, onRegionChangeComplete } =
-    useViewModel();
+// Accedemos al navigator:
+interface Props
+  extends StackScreenProps<ClientStackParamList, "ClientAddressMapScreen"> {}
+
+export const ClientAddressMapScreen = ({ navigation, route }: Props) => {
+  const {
+    messagePermissions,
+    position,
+    mapRef,
+    name,
+    latitude,
+    longitude,
+    onRegionChangeComplete,
+  } = useViewModel();
 
   useEffect(() => {
     if (messagePermissions != "") {
@@ -38,7 +51,21 @@ export const ClientAddressMapScreen = () => {
       </View>
 
       <View style={styles.buttonRefPoint}>
-        <RoundedButton text="SELECCIONAR PUNTO" onPress={() => {}} />
+        <RoundedButton
+          text="SELECCIONAR PUNTO"
+          onPress={() => {
+            navigation.navigate({
+              // Así pasamos parámetros además de navegar
+              name: "ClientAddressCreateScreen",
+              merge: true,
+              params: {
+                refPoint: name,
+                latitude: latitude,
+                longitude: longitude,
+              },
+            });
+          }}
+        />
       </View>
     </View>
   );

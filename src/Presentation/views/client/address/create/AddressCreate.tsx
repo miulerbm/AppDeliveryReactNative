@@ -32,6 +32,14 @@ export const ClientAddressCreateScreen = ({ navigation, route }: Props) => {
 
   const [modalVisible, setModalVisible] = useState(false);
 
+  // Con un useEffect escuchamos los cambios en el refpoint y volvemos a establecer su valor
+  useEffect(() => {
+    if (route.params?.refPoint) {
+      // Si route params refpoint existe
+      onChange("refPoint", route.params?.refPoint);
+    }
+  }, [route.params?.refPoint]);
+
   useEffect(() => {
     if (responseMessage !== "") {
       ToastAndroid.show(responseMessage, ToastAndroid.LONG);
