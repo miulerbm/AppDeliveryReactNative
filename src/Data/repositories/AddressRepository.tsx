@@ -5,6 +5,22 @@ import { ResponseApiDelivery } from "../sources/remote/models/ResponseApiDeliver
 import { ApiDelivery } from "../sources/remote/api/ApiDelivery";
 
 export class AddressRepositoryImpl implements AddressRepository {
+  async getByUser(id_user: string): Promise<Address[]> {
+    try {
+      const response = await ApiDelivery.get<Address[]>(
+        `/address/findByUser/${id_user}`
+      );
+      return Promise.resolve(response.data);
+    } catch (error) {
+      let e = error as AxiosError;
+      console.log("ERROR: " + JSON.stringify(e.response?.data));
+      const apiError: ResponseApiDelivery = JSON.parse(
+        JSON.stringify(e.response?.data)
+      );
+      return Promise.resolve([]);
+    }
+  }
+
   async create(address: Address): Promise<ResponseApiDelivery> {
     try {
       const response = await ApiDelivery.post<ResponseApiDelivery>(
