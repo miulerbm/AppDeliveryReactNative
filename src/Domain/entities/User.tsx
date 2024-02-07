@@ -1,6 +1,7 @@
 // Vamos a crear la clase usuario.
 // Herramienta: app quicktype io
 
+import { Address } from "./Address";
 import { Rol } from "./Rol";
 
 export interface User {
@@ -14,4 +15,6 @@ export interface User {
   image?: string;
   session_token?: string;
   roles?: Rol[];
+  // Adding address field:
+  address?: Address;
 }

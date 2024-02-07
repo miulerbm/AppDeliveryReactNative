@@ -6,9 +6,9 @@ import { AddressListItem } from "./Item";
 export const ClientAddressListScreen = () => {
   const { address, checked, getAddress, changeRadioValue } = useViewModel();
 
-  useEffect(() => {
-    getAddress();
-  }, []);
+  // useEffect(() => {
+  //   getAddress();
+  // }, []);
 
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>

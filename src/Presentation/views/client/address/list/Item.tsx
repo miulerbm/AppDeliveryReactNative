@@ -6,7 +6,7 @@ import { RadioButton } from "react-native-paper";
 interface Props {
   address: Address;
   checked: string;
-  changeRadioValue: (idAddress: string) => void;
+  changeRadioValue: (address: Address) => void;
 }
 
 export const AddressListItem = ({
@@ -20,7 +20,7 @@ export const AddressListItem = ({
         <RadioButton
           value={address.id!}
           status={checked === address.id ? "checked" : "unchecked"}
-          onPress={() => changeRadioValue(address.id!)}
+          onPress={() => changeRadioValue(address)}
         />
         <View style={styles.infoAddress}>
           <Text style={styles.address}>{address.address}</Text>
