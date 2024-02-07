@@ -27,7 +27,8 @@ export const ClientAddressCreateScreen = ({ navigation, route }: Props) => {
     responseMessage,
     loading,
     onChange,
-    createCategory,
+    onChangeRefPoint,
+    createAddress,
   } = useViewModel();
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -35,8 +36,11 @@ export const ClientAddressCreateScreen = ({ navigation, route }: Props) => {
   // Con un useEffect escuchamos los cambios en el refpoint y volvemos a establecer su valor
   useEffect(() => {
     if (route.params?.refPoint) {
-      // Si route params refpoint existe
-      onChange("refPoint", route.params?.refPoint);
+      onChangeRefPoint(
+        route.params?.refPoint,
+        route.params?.latitude,
+        route.params?.longitude
+      );
     }
   }, [route.params?.refPoint]);
 
@@ -92,10 +96,7 @@ export const ClientAddressCreateScreen = ({ navigation, route }: Props) => {
       </View>
 
       <View style={styles.buttonContainer}>
-        <RoundedButton
-          text="CREAR DIRECCIÓN"
-          onPress={() => createCategory()}
-        />
+        <RoundedButton text="CREAR DIRECCIÓN" onPress={() => createAddress()} />
       </View>
 
       {loading && (
