@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { FlatList, Text, View } from "react-native";
 import useViewModel from "./ViewModel";
+import { AddressListItem } from "./Item";
 
 export const ClientAddressListScreen = () => {
-  const { address, getAddress } = useViewModel();
+  const { address, checked, getAddress, changeRadioValue } = useViewModel();
 
   useEffect(() => {
     getAddress();
@@ -14,7 +15,13 @@ export const ClientAddressListScreen = () => {
       <FlatList
         data={address}
         keyExtractor={(item) => item.id!}
-        renderItem={({ item }) => <Text>{item.address}</Text>}
+        renderItem={({ item }) => (
+          <AddressListItem
+            address={item}
+            checked={checked}
+            changeRadioValue={changeRadioValue}
+          />
+        )}
       />
     </View>
   );

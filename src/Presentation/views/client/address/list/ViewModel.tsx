@@ -7,6 +7,12 @@ const ClientAddressListViewModel = () => {
   const [address, setAddress] = useState<Address[]>([]);
   const { user } = useContext(UserContext);
 
+  const [checked, setChecked] = useState("");
+
+  const changeRadioValue = (idAddress: string) => {
+    setChecked(idAddress);
+  };
+
   const getAddress = async () => {
     // Con esto traemos las direcciones:
     const result = await GetByUserAddressUseCase(user.id!);
@@ -16,7 +22,9 @@ const ClientAddressListViewModel = () => {
 
   return {
     address,
+    checked,
     getAddress,
+    changeRadioValue,
   };
 };
 
